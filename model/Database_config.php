@@ -5,6 +5,7 @@
  * Date: 2015-10-27
  * Time: 23:20
  */
+
 namespace model;
 
      $dbhost = \Settings::DB_host;
