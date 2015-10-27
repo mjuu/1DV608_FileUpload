@@ -21,7 +21,8 @@ class UploadView{
 
 
     public function response(){
-       $this->doUpload();
+        echo $this->generateLoginFormHTML(self::$message);
+      // $this->doUpload();
     }
 
     public function doUpload(){
@@ -41,7 +42,6 @@ class UploadView{
 
         }else{
             echo "dddd";
-            echo $this->generateLoginFormHTML(self::$message);
         }
 
 }
