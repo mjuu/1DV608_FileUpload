@@ -6,16 +6,49 @@
  * Time: 16:38
  */
 namespace view;
+require_once("model/Database_config.php");
 
 class Upload
 {
 
+    private $db_con;
     private $up;
 
-    //  public function __construct(UploadView $up)
-    //{
-    //   $this->up = $up;
-    // }
+    public function __construct(\model\Database_config $db_con, UploadView $up){
+        $this->db_con = $db_con;
+        $this->up = $up;
+
+
+    }
+    public function uploadFile(){
+    $file = rand(1000,100000)."-".$_FILES[$this->up->getFile()]["name"];
+        $file_loc = $_FILES['file']['tmp_name'];
+        $file_size = $_FILES['file']['size'];
+        $file_type = $_FILES['file']['type'];
+        $folder="uploads/";
+
+        // new file size in KB
+        $new_size = $file_size/1024;
+        // new file size in KB
+
+        // make file name in lower case
+        $new_file_name = strtolower($file);
+        // make file name in lower case
+
+        $final_file=str_replace(' ','-',$new_file_name);
+
+        if(move_uploaded_file($file_loc,$folder.$final_file))
+        {
+            $sql="INSERT INTO tbl_uploads(file,type,size) VALUES('$final_file','$file_type','$new_size')";
+            mysql_queryi($sql);
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
 
     public function checkFile()
     {

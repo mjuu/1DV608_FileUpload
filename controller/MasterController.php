@@ -24,7 +24,7 @@ class MasterController
 
     public function doControl(){
 
-        if($this->uploadView->uploadLink()==true){
+        if($this->uploadView->uploadLinkClicked()==true){
             $this->uploadView->response();
         }else{
             $this->view->showFileList();

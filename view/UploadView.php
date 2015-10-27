@@ -10,7 +10,7 @@ namespace view;
 class UploadView{
     private static $register = "RegisterView::Register";
     private static $username = "RegisterView::UserName";
-    private static $message = "UploadView::Message";
+    public static $message = "UploadView::Message";
     private static $file = "FileToUpload";
     private static $upload = "UploadView::upload";
     private static $private = "private";
@@ -29,7 +29,16 @@ class UploadView{
             echo "sfsfsfsf";
             var_dump($this->getFile());
             $upl = new Upload();
-            $upl->checkFile();
+            $upl->uploadFile();
+            if($upl->uploadFile()==1){
+
+                echo "success";
+                $this->setMessage("Success");
+            }else{
+                echo "fail";
+                $this->setMessage("Fail");
+            }
+
         }else{
             echo "dddd";
             echo $this->generateLoginFormHTML(self::$message);
@@ -77,7 +86,7 @@ class UploadView{
         return isset($_POST[self::$private]);
     }
 
-    public function uploadLink(){
+    public function uploadLinkClicked(){
         return isset($_GET[self::$uploadURL]);
     }
     public function showUpload(){
