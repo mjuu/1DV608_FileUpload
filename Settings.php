@@ -10,4 +10,5 @@ class Settings {
     const DB_user = "root";
     const DB_pass ="";
     const DB_name = "upload";
+    const DB_tabel ="file_uploads";
 }

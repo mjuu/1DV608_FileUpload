@@ -12,8 +12,9 @@ namespace model;
      $dbuser = \Settings::DB_user;
      $dbpass = \Settings::DB_pass;
      $dbname = \Settings::DB_name;
+     $dbtabell = \Settings::DB_tabel;
 
     mysqli_connect($dbhost,$dbuser,$dbpass) or die('Cannot connect to server');
-    mysqli_select_db($dbname);
+    mysqli_select_db($dbname,$dbtabell);
 
 
