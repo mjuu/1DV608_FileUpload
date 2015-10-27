@@ -27,7 +27,7 @@ class UploadView{
     public function doUpload(){
         if($this->submitFile()){
             echo "sfsfsfsf";
-            var_dump($this->getFile());
+            //var_dump($this->getFile());
             $upl = new Upload();
             $upl->uploadFile();
             if($upl->uploadFile()==1){
