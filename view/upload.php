@@ -44,8 +44,8 @@ class Upload
         $final_file = str_replace(' ', '-', $new_file_name);
 
         if (move_uploaded_file($file_loc, $folder . $final_file)) {
-            $sql = "INSERT INTO tbl_uploads(file,type,size) VALUES('$final_file','$file_type','$new_size')";
-            mysql_queryi($sql);
+            $sql = "INSERT INTO file_uploads(file,type,size) VALUES('$final_file','$file_type','$new_size')";
+            mysql_query($sql);
             return 1;
         } else {
             return -1;
