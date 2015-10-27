@@ -11,58 +11,83 @@ class UploadView{
     private static $register = "RegisterView::Register";
     private static $username = "RegisterView::UserName";
     private static $message = "UploadView::Message";
-    private static $file = "File";
-    private static $upload = "PasswordRep";
-    private static $keep = "register";
+    private static $file = "FileToUpload";
+    private static $upload = "UploadView::upload";
+    private static $private = "private";
     private static $backButton = "";
     private static $messageId = "";
-    //public  $message = "";
-
-    private static $uploadURL = "upload";
+    public  static $messageToUsr="";
+    private static $uploadURL = "up";
 
 
     public function response(){
-       echo $this->generateLoginFormHTML(self::$message);
+       $this->doUpload();
     }
-    public function generateLoginFormHTML($message) {
 
-        //$message = "test";
+    public function doUpload(){
+        if($this->submitFile()){
+            echo "sfsfsfsf";
+            var_dump($this->getFile());
+            $upl = new Upload();
+            $upl->checkFile();
+        }else{
+            echo "dddd";
+            echo $this->generateLoginFormHTML(self::$message);
+        }
+
+}
+    public function generateLoginFormHTML($message) {
+       // var_dump($message);
+        $message = "You can only upload files with these extensions: '.bat', '.exe', '.sh','.jar' <br>
+         This is to prevent from uploading non-virus files!";
         $messageId = "d";
+        //<form action ='Upload.php' method='post' enctype='multipart/form-data'>
        echo $this->showBackButton();
-        return "<form method='post' >
+        return '<p>
+
+                 <form action="?upload" method="post" enctype="multipart/form-data">
 				<fieldset>
 					<legend>Upload file</legend>
-					<p id='".self::$message."'>$message</p>
+					<p id="' .self::$message.'">'.$message.'</p>
 
-					<label for='".self::$file."'>Password :</label>
-					<input type='File' id='".self::$file."' name='".self::$file."'/>
+					<label for="'.self::$file.'">File :</label>
+					<input type="file" id="'.self::$file.'" name="'.self::$file.'"/>
 
-					<label for='".self::$keep."'>Private :</label>
-					<input type='checkbox' id='".self::$keep."' name='".self::$keep."'/>
+					<label for="'.self::$private.'">Private :</label>
+					<input type="checkbox" id="'.self::$private.'" name="'.self::$private.'"/>
 
-					<input type='submit' name='".self::$upload."' value='Upload'/>
+					<input type="submit" name="'.self::$upload.'" value="Upload"/>
 				</fieldset>
 			</form>
 			<br>
 
-		";
+		';
 
 
     }
-    /**
-     * Check if "Register a new user" is clicked
-     * @return bool
-     */
-    public function getUploadPressed(){
+
+    public function submitFile(){
+        return isset($_POST[self::$upload]);
+    }
+    public function getFile(){
+        return isset($_POST[self::$file]);
+    }
+
+    public function privateUpload(){
+        return isset($_POST[self::$private]);
+    }
+
+    public function uploadLink(){
         return isset($_GET[self::$uploadURL]);
     }
     public function showUpload(){
         return "<a href='?" . self::$uploadURL . "'>Upload a file</a>";
     }
     public function showBackButton(){
-        return "<a href='?" . self::$backButton. "'> Back to login</a>";
+        return "<a href='?" . self::$backButton. "'> Back to Start</a>";
     }
     public function setMessage($message){
+
 
     }
 }

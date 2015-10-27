@@ -24,10 +24,13 @@ class MasterController
 
     public function doControl(){
 
-        if($this->uploadView->getUploadPressed()==true){
+        if($this->uploadView->uploadLink()==true){
             $this->uploadView->response();
         }else{
             $this->view->showFileList();
         }
+    }
+    public function doUpload(){
+
     }
 }
