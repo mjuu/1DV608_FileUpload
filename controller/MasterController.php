@@ -28,12 +28,11 @@ class MasterController
             $this->uploadView->response();
             if($this->uploadView->submitFile()==true){
                 $this->uploadView->doUpload();
+            }else{
+                echo "fail fari";
             }
         }else{
             $this->view->showFileList();
         }
-    }
-    public function doUpload(){
-
     }
 }

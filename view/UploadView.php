@@ -21,28 +21,26 @@ class UploadView{
 
 
     public function response(){
-        //echo $this->generateLoginFormHTML("test");
-       $this->doUpload();
+        echo $this->generateLoginFormHTML("test");
+     //  $this->doUpload();
     }
 
     public function doUpload(){
         //if($this->submitFile()){
-            echo "sfsfsfsf";
-            //var_dump($this->getFile());
+            var_dump($this->getFile());
 
             if($this->uploadFile()==1){
-
-                echo "success";
+              //  echo "success";
                 echo $this->generateLoginFormHTML("success");
                 $this->setMessage("Success");
             }else{
-                echo "fail";
+               // echo "fail";
                 echo $this->generateLoginFormHTML("fail");
                 $this->setMessage("Fail");
             }
 
         //}else{
-            echo "dddd";
+
        // }
 
 }
