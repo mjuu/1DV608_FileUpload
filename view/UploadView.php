@@ -11,7 +11,7 @@ class UploadView{
     private static $register = "RegisterView::Register";
     private static $username = "RegisterView::UserName";
     public static $message = "UploadView::Message";
-    private static $file = "UploadView::FileToUpload";
+    public static $file = "FileToUpload";
     private static $upload = "UploadView::Upload";
     private static $private = "private";
     private static $backButton = "";

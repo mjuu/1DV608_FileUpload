@@ -31,7 +31,7 @@ class MasterController
                 $this->uploadView->doUpload();
             }else{
                 var_dump($this->uploadView->getFile());
-                echo "fail fari";
+
             }
         }else{
 
