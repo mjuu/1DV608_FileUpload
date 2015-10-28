@@ -26,7 +26,7 @@ class Upload
 
     public function uploadFile()
     {
-        var_dump($this->file);
+        print_r($this->file);
         $file = rand(1000, 100000) . "-" . $_FILES[$this->file]["name"];
         $file_loc = $_FILES['file']['tmp_name'];
         $file_size = $_FILES['file']['size'];
