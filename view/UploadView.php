@@ -21,7 +21,7 @@ class UploadView{
 
 
     public function response(){
-        echo $this->generateLoginFormHTML(self::$message);
+        echo $this->generateLoginFormHTML("test");
       // $this->doUpload();
     }
 
@@ -34,9 +34,11 @@ class UploadView{
             if($upl->uploadFile()==1){
 
                 echo "success";
+                echo $this->generateLoginFormHTML("success");
                 $this->setMessage("Success");
             }else{
                 echo "fail";
+                echo $this->generateLoginFormHTML("fail");
                 $this->setMessage("Fail");
             }
 
@@ -47,8 +49,8 @@ class UploadView{
 }
     public function generateLoginFormHTML($message) {
        // var_dump($message);
-        $message = "You can only upload files with these extensions: '.bat', '.exe', '.sh','.jar' <br>
-         This is to prevent from uploading non-virus files!";
+        //$message = "You can only upload files with these extensions: '.bat', '.exe', '.sh','.jar' <br>
+         //This is to prevent from uploading non-virus files!";
         $messageId = "d";
         //<form action ='Upload.php' method='post' enctype='multipart/form-data'>
        echo $this->showBackButton();
