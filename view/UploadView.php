@@ -23,29 +23,20 @@ class UploadView{
     public function response(){
         $message = "You can only upload files with these extensions: '.bat', '.exe', '.sh','.jar' <br>
         This is to prevent from uploading non-virus files!";
+        var_dump($this->getFile());
         echo $this->generateUploadFormHTML($message);
 
     }
 
     public function doUpload(){
-        //if($this->submitFile()){
-            var_dump($this->getFile());
 
-            echo $this->uploadFile();
+
+            $this->uploadFile();
             if($this->uploadFile()==1){
-              //  echo "success";
                 echo $this->generateUploadFormHTML("success");
-                $this->setMessage("Success");
             }else{
-               // echo "fail";
                 echo $this->generateUploadFormHTML("fail");
-                $this->setMessage("Fail");
             }
-
-        //}else{
-
-       // }
-
 }
     public function uploadFile()
     {
@@ -71,9 +62,9 @@ class UploadView{
         if (move_uploaded_file($file_loc, $folder . $final_file)) {
             $sql = "INSERT INTO file_uploads(file,type,size) VALUES('$final_file','$file_type','$new_size')";
             mysql_query($sql);
-            echo $this->generateUploadFormHTML("success");
+            return 1;
         } else {
-            echo $this->generateUploadFormHTML("fail");
+            return -1;
         }
     }
     public function generateUploadFormHTML($message) {
