@@ -39,13 +39,10 @@ class UploadView{
 }
     public function uploadFile()
     {
-
-        $file = $this->getFile();
-        print_r($this->file);
-        $file = rand(1000, 100000) . "-" . $_FILES[$file]["name"];
-        $file_loc = $_FILES[$file]['tmp_name'];
-        $file_size = $_FILES[$file]['size'];
-        $file_type = $_FILES[$file]['type'];
+        $file = rand(1000, 100000) . "-" . $_FILES["FileToUpload"]["name"];
+        $file_loc = $_FILES["FileToUpload"]['tmp_name'];
+        $file_size = $_FILES["FileToUpload"]['size'];
+        $file_type = $_FILES["FileToUpload"]['type'];
         $folder = "uploads/";
 
         // new file size in KB
