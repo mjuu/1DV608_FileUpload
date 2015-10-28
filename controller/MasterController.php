@@ -27,10 +27,10 @@ class MasterController
         if($this->uploadView->uploadLinkClicked()==true){
             $this->uploadView->response();
             if($this->uploadView->submitFile()==true){
-                var_dump($this->uploadView->getFile());
+
                 $this->uploadView->doUpload();
             }else{
-
+                var_dump($this->uploadView->getFile());
                 echo "fail fari";
             }
         }else{

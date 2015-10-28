@@ -98,7 +98,10 @@ class UploadView{
         return isset($_POST[self::$upload]);
     }
     public function getFile(){
-        return isset($_POST[self::$file]);
+       if(isset($_POST[self::$file])){
+           $file = $_POST[self::$file];
+       }
+        return $file;
     }
 
     public function privateUpload(){
