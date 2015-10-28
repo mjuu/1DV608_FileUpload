@@ -11,7 +11,7 @@ class UploadView{
     private static $register = "RegisterView::Register";
     private static $username = "RegisterView::UserName";
     public static $message = "UploadView::Message";
-    private static $file = "FileToUpload";
+    private static $file = "UploadView::FileToUpload";
     private static $upload = "UploadView::Upload";
     private static $private = "private";
     private static $backButton = "";
@@ -29,9 +29,8 @@ class UploadView{
         //if($this->submitFile()){
             echo "sfsfsfsf";
             //var_dump($this->getFile());
-            $upl = new Upload();
-            $upl->uploadFile();
-            if($upl->uploadFile()==1){
+
+            if($this->uploadFile()==1){
 
                 echo "success";
                 echo $this->generateLoginFormHTML("success");
@@ -47,6 +46,35 @@ class UploadView{
        // }
 
 }
+    public function uploadFile()
+    {
+
+        $file = $this->getFile();
+        print_r($this->file);
+        $file = rand(1000, 100000) . "-" . $_FILES[$file]["name"];
+        $file_loc = $_FILES[$file]['tmp_name'];
+        $file_size = $_FILES[$file]['size'];
+        $file_type = $_FILES[$file]['type'];
+        $folder = "uploads/";
+
+        // new file size in KB
+        $new_size = $file_size / 1024;
+        // new file size in KB
+
+        // make file name in lower case
+        $new_file_name = strtolower($file);
+        // make file name in lower case
+
+        $final_file = str_replace(' ', '-', $new_file_name);
+
+        if (move_uploaded_file($file_loc, $folder . $final_file)) {
+            $sql = "INSERT INTO file_uploads(file,type,size) VALUES('$final_file','$file_type','$new_size')";
+            mysql_query($sql);
+            echo $this->generateLoginFormHTML("success");
+        } else {
+            echo $this->generateLoginFormHTML("fail");
+        }
+    }
     public function generateLoginFormHTML($message) {
        // var_dump($message);
         //$message = "You can only upload files with these extensions: '.bat', '.exe', '.sh','.jar' <br>
