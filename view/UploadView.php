@@ -29,6 +29,7 @@ class UploadView{
     }
 
     public function doUpload(){
+        var_dump($this->getFile());
             $this->uploadFile();
             if($this->uploadFile()==1){
                 echo $this->generateUploadFormHTML("success");
