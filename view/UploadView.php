@@ -21,8 +21,8 @@ class UploadView{
 
 
     public function response(){
-        echo $this->generateLoginFormHTML("test");
-      // $this->doUpload();
+        //echo $this->generateLoginFormHTML("test");
+       $this->doUpload();
     }
 
     public function doUpload(){
