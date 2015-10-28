@@ -13,21 +13,23 @@ class Upload
 
     private $db_con;
     private $up;
-    private $file;
+//    private $file;
 
-    public function __construct(UploadView $up)
-    {
+   // public function __construct(UploadView $up)
+   // {
       //  $this->db_con = $db_con;
-        $this->up = $up;
-        $this->file = $this->up->getFile();
+     //   $this->up = $up;
+       // $this->file = $this->up->getFile();
 
 
-    }
+//    }
 
     public function uploadFile()
     {
+        $up = new UploadView();
+        $file = $up->getFile();
         print_r($this->file);
-        $file = rand(1000, 100000) . "-" . $_FILES[$this->file]["name"];
+        $file = rand(1000, 100000) . "-" . $_FILES[$file]["name"];
         $file_loc = $_FILES['file']['tmp_name'];
         $file_size = $_FILES['file']['size'];
         $file_type = $_FILES['file']['type'];
