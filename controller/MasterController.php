@@ -26,7 +26,7 @@ class MasterController
 
         if($this->uploadView->uploadLinkClicked()==true){
             $this->uploadView->response();
-            if($this->uploadView->submitFile()==true){
+            if($this->uploadView->submitFile()==false){
                 $this->uploadView->doUpload();
             }
         }else{
