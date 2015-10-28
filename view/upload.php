@@ -15,9 +15,9 @@ class Upload
     private $up;
     private $file;
 
-    public function __construct(\model\Database_config $db_con, UploadView $up)
+    public function __construct(UploadView $up)
     {
-        $this->db_con = $db_con;
+      //  $this->db_con = $db_con;
         $this->up = $up;
         $this->file = $this->up->getFile();
 

@@ -26,7 +26,7 @@ class UploadView{
     }
 
     public function doUpload(){
-        if($this->submitFile()==false){
+        //if($this->submitFile()){
             echo "sfsfsfsf";
             //var_dump($this->getFile());
             $upl = new Upload();
@@ -40,9 +40,9 @@ class UploadView{
                 $this->setMessage("Fail");
             }
 
-        }else{
+        //}else{
             echo "dddd";
-        }
+       // }
 
 }
     public function generateLoginFormHTML($message) {
