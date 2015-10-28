@@ -66,7 +66,6 @@ class UploadView{
     public function generateUploadFormHTML($message) {
        // var_dump($message);
 
-        $messageId = "d";
         //<form action ='Upload.php' method='post' enctype='multipart/form-data'>
        echo $this->showBackButton();
         return '<p>
@@ -82,7 +81,7 @@ class UploadView{
 					<label for="'.self::$private.'">Private :</label>
 					<input type="checkbox" id="'.self::$private.'" name="'.self::$private.'"/>
 
-					<input type="submit" name="'.self::$upload.'" value="Upload"/>
+					<input type="submit" id="submit" name="'.self::$upload.'" value="Upload"/>
 				</fieldset>
 			</form>
 			<br>
