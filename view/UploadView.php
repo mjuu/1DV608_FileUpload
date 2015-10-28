@@ -23,14 +23,12 @@ class UploadView{
     public function response(){
         $message = "You can only upload files with these extensions: '.bat', '.exe', '.sh','.jar' <br>
         This is to prevent from uploading non-virus files!";
-        var_dump($this->getFile());
+
         echo $this->generateUploadFormHTML($message);
 
     }
 
     public function doUpload(){
-
-
             $this->uploadFile();
             if($this->uploadFile()==1){
                 echo $this->generateUploadFormHTML("success");
@@ -117,7 +115,5 @@ class UploadView{
         return "<a href='?" . self::$backButton. "'> Back to Start</a>";
     }
     public function setMessage($message){
-
-
     }
 }
