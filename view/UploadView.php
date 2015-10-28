@@ -31,6 +31,7 @@ class UploadView{
         //if($this->submitFile()){
             var_dump($this->getFile());
 
+            echo $this->uploadFile();
             if($this->uploadFile()==1){
               //  echo "success";
                 echo $this->generateUploadFormHTML("success");
