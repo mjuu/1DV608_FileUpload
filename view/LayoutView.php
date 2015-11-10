@@ -24,7 +24,7 @@ class LayoutView
 
         <?php
 
-        if (!$up->getUploadPressed()) {
+        if (!$up->uploadLinkClicked()) {
 
             $up->showUpload();
             echo "<br>".$up->showBackButton();
@@ -33,9 +33,12 @@ class LayoutView
             //echo $rv->showCookieInfo();
 
 
+        }elseif($up->submitFile()){
+            echo "file upload";
+
         } else {
 
-            $this->isLoggedin();
+            //$this->isLoggedin();
             ?>
             <div class="container">
                 <?php

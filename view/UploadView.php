@@ -37,6 +37,10 @@ class UploadView{
                 echo $this->generateUploadFormHTML("fail");
             }
 }
+
+
+
+
     public function uploadFile()
     {
         $file = rand(1000, 100000) . "-" . $_FILES["FileToUpload"]["name"];
@@ -70,7 +74,7 @@ class UploadView{
        echo $this->showBackButton();
         return '<p>
 
-                 <form action="?upload" method="post" enctype="multipart/form-data">
+                 <form action="" method="post" enctype="multipart/form-data">
 				<fieldset>
 					<legend>Upload file</legend>
 					<p id="' .self::$message.'">'.$message.'</p>
@@ -95,10 +99,8 @@ class UploadView{
         return isset($_POST[self::$upload]);
     }
     public function getFile(){
-       if(isset($_POST[self::$file])){
-           $file = $_POST[self::$file];
-       }
-        return $file;
+
+    return self::$file;
     }
 
     public function privateUpload(){

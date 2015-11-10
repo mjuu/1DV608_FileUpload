@@ -9,13 +9,20 @@
 namespace view;
 
 
+use model\FileDAL;
+
 class View{
 
     public function showFileList(){
+        //phpinfo();
         $uploadBTN = new UploadView();
+        $showTabell = new FileDAL();
+
+        echo "<H1>File Upload</H1>";
+        echo "<p><H2>List</H2>";
+        $showTabell->showTabell();
 
 
-        echo "file list comming soon";
         echo "<br>".$uploadBTN->showUpload();
 
     }

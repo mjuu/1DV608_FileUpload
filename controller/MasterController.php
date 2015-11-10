@@ -15,11 +15,13 @@ class MasterController
     private $uploadView;
     private $model;
     private $view;
-    public function __construct(\model\FileModel $model, \view\UploadView $uploadView, View $view)
+    private $fileTest;
+    public function __construct(\model\FileModel $model, \view\UploadView $uploadView, View $view, \model\FileDAL $fileTest)
     {
         $this->model = $model;
         $this->uploadView = $uploadView;
         $this->view = $view;
+        $this->fileTest = $fileTest;
     }
 
     public function doControl(){
@@ -27,8 +29,8 @@ class MasterController
         if($this->uploadView->uploadLinkClicked()==true){
             $this->uploadView->response();
             if($this->uploadView->submitFile()==true){
-
-                $this->uploadView->doUpload();
+                $this->fileTest->fileUpload();
+                //$this->uploadView->doUpload();
             }else{
 
             }
