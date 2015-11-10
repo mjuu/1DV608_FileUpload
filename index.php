@@ -11,7 +11,7 @@ require_once("model/FileDAL.php");
 require_once("view/View.php");
 require_once("view/UploadView.php");
 require_once("view/upload.php");
-require_once("/etc/var/conf/conf.php");
+require_once("/var/conf/conf.php");
 
 $fileDal = new \model\FileDAL();
 $up = new \view\UploadView();
