@@ -81,7 +81,7 @@ class FileDAL
 
     public function showTabell()
     {
-        $sql = "SELECT * FROM .file_uploads";
+        $sql = "SELECT * FROM ".DB_TABELL;
         $query = $this->pdo->prepare($sql);
         $query->execute();
         $results = $query->fetchAll();
