@@ -10,14 +10,11 @@ namespace model;
 use view\LoginView;
 
 class LoginDAL{
-
     public $error;
-    private $loginView;
-   // private $username = 'admin';
-    //private $password ='1pass';
+    public $username=false;
+    public $password=false;
     public function __construct(){
-        $lv = new \view\LoginView;
-        $this->loginView = $lv;
+
 
         $dsn = 'mysql:host=' . DB_HOST . ';dbname=' .DB_LOGIN_NAME;
         try {
@@ -28,68 +25,68 @@ class LoginDAL{
 
     }
 
-    public function doLogin(){
-
-
+    public function doLogin($username, $pass){
         //$sql = "SELECT * FROM ".DB_LOGIN_TABLE."WHERE username = :usernameInput AND password = :passwordInput";
         $sql = "SELECT username FROM members WHERE username = :usernameInput";
         $query = $this->pdo->prepare($sql);
-        $query->bindParam(':usernameInput',$this->loginView->getUsername());
+        $query->bindParam(':usernameInput',$username);
         $query->execute();
         $result1 = $query->fetchColumn();
 
 
-        var_dump($result1);
+        //var_dump($result1);
         if($result1==false){
-//            $this->loginView->setLoginFailed();
-//            $this->loginView->setUsernameStatus();
             echo 'username fail <p>';
-            var_dump($result1);
+           // var_dump($result1);
             $this->error =1;
+            $this->username=false;
 
         }else{
-//            $this->loginView->setUsernameStatus(true);
-//            $this->loginView->setLoginOK();
             echo 'username ok <p>';
-            $this->error=3;
+            //$this->error=3;
+            $this->username = true;
         }
 
         $sql = "SELECT password FROM ".DB_LOGIN_TABLE." WHERE password = :passwordInput";
         $query = $this->pdo->prepare($sql);
 
-        $query->bindParam(':passwordInput',$this->loginView->getPassword());
+        $query->bindParam(':passwordInput',$pass);
         $query->execute();
         $result2 = $query->fetchColumn();
 
-        var_dump($result2);
+
+       // var_dump($result2);
         if($result2==false){
-//            $this->loginView->setPasswordStatusF();
-//            $this->loginView->setMessage("pass fail ");
             echo 'pass fail <p>';
             $this->error=2;
+            $this->password=false;
 
         }else{
-            ;
-//            $this->loginView->setMessage("pass OK");
-//            $this->loginView->setLoginOK();
             echo 'pass ok <p>';
-            $this->error='4';
+            //$this->error=4;
+            $this->password =true;
         }
-//        var_dump( $this->loginView->setLoginOK());
-
-        $this->error;
-
-        if($result1==false){
-            return 1;
-        }elseif($result2==false){
-            return 2;
-        }
-        else{
-            return true;
-        }
-
+      //  var_dump($this->getUsernameStatus());
+        //var_dump($this->getPasswordStatus());
+        var_dump($this->loggedIn());
+        $tes = new LoginView();
+        $tes->setLoginOK();
 }
-    public function getErrorStatus(){
+    public function getLoginStatus(){
         return $this->error;
+    }
+    public function getUsernameStatus(){
+        return $this->username;
+    }
+    public function getPasswordStatus(){
+        return $this->password;
+    }
+    public function loggedIn(){
+        if($this->username == true){
+            return true;
+        }else{
+            return false;
+        }
+        return false;
     }
 }

@@ -13,17 +13,19 @@ class MasterController
     private $uploadView;
     private $model;
     private $view;
-    private $lv;
+    private $loginView;
     private $fileDal;
     private $loginDal;
-    public function __construct(\model\FileModel $model, \view\UploadView $uploadView, \view\View $view,\model\FileDAL $fileDAL ,\view\LoginView $lv, \model\LoginDAL $ld)
+    private $loginCont;
+    public function __construct(\model\FileModel $model, \view\UploadView $uploadView, \view\View $view,\model\FileDAL $fileDAL ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\LoginController $loginC)
     {
         $this->model = $model;
         $this->uploadView = $uploadView;
         $this->view = $view;
-        $this->lv = $lv;
+        $this->loginView = $lv;
         $this->fileDal=$fileDAL;
         $this->loginDal= $ld;
+        $this->loginCont = $loginC;
     }
 
     public function doControl(){
@@ -34,17 +36,7 @@ class MasterController
                 $this->fileDal->fileUpload();
             }
         }elseif($this->uploadView->loginLinkClicked()==true){
-            $this->lv->render();
-            if($this->lv->wantToLogin() == true){
-                $this->loginDal->doLogin();
-                if($this->loginDal == true){
-                    $this->lv->setLoginOK();
-                $this->view->showFileList();
-                }else{
-                    $this->lv->setLoginFailed();
-                }
-
-            }
+            $this->loginCont->controll();
         }else{
             $this->view->showFileList();
         }

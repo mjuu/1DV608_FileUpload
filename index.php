@@ -6,6 +6,7 @@
  * Time: 20:35
  */
 require_once("controller/MasterController.php");
+require_once("controller/LoginController.php");
 require_once("model/FileModel.php");
 require_once("model/FileDAL.php");
 require_once("model/LoginDAL.php");
@@ -18,10 +19,10 @@ $lv = new \view\LoginView();
 $up = new \view\UploadView();
 $v = new view\View();
 
-$ld = new \model\LoginDAL($lv);
+$ld = new \model\LoginDAL();
 $fileDal = new \model\FileDAL();
 $m = new model\FileModel();
-
-$c = new controller\MasterController($m,$up,$v,$fileDal, $lv, $ld);
+$lc = new \controller\LoginController($v,$lv,$ld);
+$c = new controller\MasterController($m,$up,$v,$fileDal, $lv, $ld, $lc);
 
 $c->doControl();

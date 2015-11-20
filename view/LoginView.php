@@ -20,15 +20,16 @@ class LoginView{
     public $usernameStatus = false;
     public $passwordStatus = false;
     public $loginFailed = false;
-    public $loggedin = false;
+    public $loggedin=false;
     public $loginDAL;
 
     public function __construct(){
-
+        $this->loginDAL = new LoginDAL();
+        $this->loggedin =false;
 }
 
     public function render(){
-        if($this->loggedin == false){
+        if(!$this->getLoginOK()){
             $this->doLogin();
         }
         else{
@@ -36,36 +37,42 @@ class LoginView{
         }
     }
 
+    public function login(){
+        $this->loginDAL->doLogin($this->getUsername(),$this->getPassword());
+    }
 
     public function  doLogin(){
-        $this->loginDAL = new LoginDAL();
         $message='';
+
+
         if(!$this->wantToLogin()){
             $message = "";
         }
-        elseif($this->loginDAL->getErrorStatus() ==1){
-            $message ="wrong username";
+        elseif($this->getUsername()==false || $this->getUsername()==''){
+            $message="wrong username";
         }
-        elseif($this->loginDAL->getErrorStatus()==2){
-            $message= "wrong password";
+        elseif($this->getPassword()==false || $this->getPassword()==''){
+            $message="wrong password";
+        }elseif($this->getLoginOK()==true){
+            $message ="logged in";
+        } else{
+            $message = "wrong username and pass";
         }
-        elseif($this->loginDAL->getErrorStatus() == 3 || $this->loginDAL->getErrorStatus()== 4){
-            $this->loggedin =true;
-            $message ="pass";
-        }else{
-            var_dump($this->loginDAL->getErrorStatus());
-            $message="wrong username and pass".$this->loginDAL->getErrorStatus();
-        }
+
+
+
+        //    $message = "wrong username and password";
+
 
         echo "login";
-
         echo $this->generateLoginFormHTML($message);
     }
     public function setMessage($message){
         $this->message =$message;
     }
     private function generateLoginFormHTML($message) {
-        var_dump($this->loggedin);
+       // var_dump($this->loggedin);
+       // echo "login ok: ".var_dump($this->getLoginOK());
         $up= new UploadView();
         echo $up->showBackButton();
         return '
@@ -91,22 +98,28 @@ class LoginView{
     public function setLoginFailed(){
         $this->loginFailed = true;
     }
+    public function getLoginFailed(){
+       return $this->loginFailed;
+    }
     public function setLoginOK(){
         $this->loggedin = true;
     }
-    public function setUsernameStatus(){
-        $this->usernameStatus = false;
+    public function getLoginOK(){
+        return $this->loggedin;
+    }
+    public function setUsernameFail(){
+        $this->usernameStatus = true;
     }
 
-    public function getUsernameStatus(){
+    public function getUsernameFail(){
         return $this->usernameStatus;
     }
 
-    public function setPasswordStatusF(){
-        $this->passwordStatus = false;
+    public function setPasswordFail(){
+        $this->passwordStatus = true;
     }
 
-    public function getPasswordStatus(){
+    public function getPasswordFail(){
         return $this->passwordStatus;
     }
 
@@ -116,11 +129,9 @@ class LoginView{
     public static function getUsername(){
         if(isset($_POST[self::$username]))
             return $_POST[self::$username];
-        return "";
     }
     public static function getPassword(){
         if(isset($_POST[self::$password]))
-            return $_POST[self::$password];
-        return "";
+          return $_POST[self::$password];
     }
 }
