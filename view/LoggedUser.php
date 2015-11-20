@@ -15,9 +15,16 @@ class LoggedUser{
     }
 
     public function render(){
+        $showTabell = new \model\FileDAL();
+        
+        $showTabell->showTabell();
         $user =$_SESSION['user'];
-        echo  '<br>'.'welcome '.$user;
-       echo '<br>'. $this->logoutBTN();
+
+        echo 'welcome '.$user.
+         "<br>".
+
+
+            $this->logoutBTN();
     }
     public function memberPage(){
         return isset($_GET[self::$member]);
@@ -30,6 +37,14 @@ class LoggedUser{
         return "<a href='?" . self::$logout. "'> Logout</a>";
     }
     public function doLogout(){
-        return session_destroy();
+        session_destroy();
+        return header("Location: ?");
+    }
+
+    public function changeURL(){
+        return isset($_GET['']);
+    }
+    public function redirect(){
+       return header("Location:?member");
     }
 }

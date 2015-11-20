@@ -34,6 +34,8 @@ class MasterController
 
     public function doControl(){
 
+        //if logged in show member page
+
         if($this->uploadView->uploadLinkClicked()==true){
             $this->uploadView->response();
             if($this->uploadView->submitFile()==true){
@@ -44,15 +46,15 @@ class MasterController
             if($this->loginView->loggedIN() == 1){
                 $this->uploadView->redirect();
             }
-
+        }elseif($this->loginView->loggedIN()==1) {
+            if ($this->memberV->memberPage() == true) {
+                $this->memberV->render();
+            }
+            if ($this->memberV->getLogout() == true) {
+                $this->memberV->doLogout();
+            }
         }else{
             $this->view->showFileList();
-        }
-        if($this->memberV->memberPage()==true){
-            $this->memberV->render();
-        }
-        if($this->memberV->getLogout()==true){
-            $this->memberV->doLogout();
         }
 
     }

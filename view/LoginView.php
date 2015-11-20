@@ -45,7 +45,6 @@ class LoginView{
 
     public function  doLogin(){
         $message='';
-        //session_destroy();
         echo $this->loggedin;
         if($this->loggedIN() ==-1 ){
             $message="";

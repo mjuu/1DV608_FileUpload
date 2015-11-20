@@ -14,7 +14,7 @@ require_once("view/View.php");
 require_once("view/LoginView.php");
 require_once("view/UploadView.php");
 require_once("view/LoggedUser.php");
-require_once("/var/conf/conf.php");
+require_once("conf/conf.php");
 
 session_start();
 
