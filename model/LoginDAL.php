@@ -11,9 +11,12 @@ use view\LoginView;
 
 class LoginDAL{
     public $error;
-    public $username=false;
-    public $password=false;
+    public $username;
+    public $password;
+    public $loggedIn = true;
+    public $notLoggedIn = -1;
     public function __construct(){
+
 
 
         $dsn = 'mysql:host=' . DB_HOST . ';dbname=' .DB_LOGIN_NAME;
@@ -68,9 +71,22 @@ class LoginDAL{
         }
       //  var_dump($this->getUsernameStatus());
         //var_dump($this->getPasswordStatus());
-        var_dump($this->loggedIn());
-        $tes = new LoginView();
-        $tes->setLoginOK();
+        //var_dump($this->loggedIn());
+       // $tes = new LoginView();
+        //$tes->setLoginOK();
+        $_SESSION['user']= $username;
+        $_SESSION['pass']= $pass;
+
+        //$_SESSION['loggedIn'] =$this->loggedIn();
+
+        if($result1 != false & $result2 !=false){
+            $_SESSION['loggedIn'] =$this->loggedIn;
+          //  echo $fd = $_SESSION['loggedIn'];
+        }else{
+            $_SESSION['loggedIn'] =$this->notLoggedIn;
+            //echo $fd = $_SESSION['loggedIn'];
+        }
+
 }
     public function getLoginStatus(){
         return $this->error;

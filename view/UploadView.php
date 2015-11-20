@@ -29,6 +29,7 @@ class UploadView{
 
     }
 
+
     public function uploadFile()
     {
         $file = rand(1000, 100000) . "-" . $_FILES["FileToUpload"]["name"];
@@ -110,6 +111,9 @@ class UploadView{
     public function loginLinkClicked(){
         return isset($_GET[self::$loginURL]);
     }
-    public function setMessage($message){
+
+    public function redirect() {
+        $actual_link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+        header("Location: ?member");
     }
 }

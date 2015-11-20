@@ -17,10 +17,10 @@ class LoginView{
     private static $password = 'LoginView::Password';
     private static $keep = 'LoginView::KeepMeLoggedIn';
     private static $messageId = 'LoginView::Message';
-    public $usernameStatus = false;
-    public $passwordStatus = false;
-    public $loginFailed = false;
-    public $loggedin=false;
+    public  $usernameStatus = false;
+    public  $passwordStatus = false;
+    public  $loginFailed = false;
+    public  $loggedin=-1;
     public $loginDAL;
 
     public function __construct(){
@@ -29,11 +29,13 @@ class LoginView{
 }
 
     public function render(){
-        if(!$this->getLoginOK()){
+        if($this->loggedIN() ==0 || -1){
             $this->doLogin();
         }
-        else{
-            echo $this->generateLoginFormHTML("logged in");
+        elseif($this->loggedIN() == 1){
+          //  echo $this->generateLoginFormHTML("logged in");
+            echo 'logged in';
+
         }
     }
 
@@ -43,28 +45,20 @@ class LoginView{
 
     public function  doLogin(){
         $message='';
-
-
-        if(!$this->wantToLogin()){
-            $message = "";
+        //session_destroy();
+        echo $this->loggedin;
+        if($this->loggedIN() ==-1 ){
+            $message="";
         }
         elseif($this->getUsername()==false || $this->getUsername()==''){
             $message="wrong username";
         }
         elseif($this->getPassword()==false || $this->getPassword()==''){
             $message="wrong password";
-        }elseif($this->getLoginOK()==true){
-            $message ="logged in";
         } else{
             $message = "wrong username and pass";
         }
 
-
-
-        //    $message = "wrong username and password";
-
-
-        echo "login";
         echo $this->generateLoginFormHTML($message);
     }
     public function setMessage($message){
@@ -95,17 +89,17 @@ class LoginView{
     }
 
 
-    public function setLoginFailed(){
-        $this->loginFailed = true;
-    }
-    public function getLoginFailed(){
-       return $this->loginFailed;
-    }
-    public function setLoginOK(){
-        $this->loggedin = true;
-    }
-    public function getLoginOK(){
-        return $this->loggedin;
+
+    public function loggedIN(){
+        if(isset($_SESSION['loggedIn'])) {
+            $fd = $_SESSION['loggedIn'];
+            if($fd ==1){
+               return $this->loggedin=1;
+            }else{
+                return $this->loggedin = -1;
+            }
+        }
+
     }
     public function setUsernameFail(){
         $this->usernameStatus = true;

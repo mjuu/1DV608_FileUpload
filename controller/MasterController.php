@@ -8,6 +8,8 @@
 namespace controller;
 
 
+use view\LoggedUser;
+
 class MasterController
 {
     private $uploadView;
@@ -17,6 +19,7 @@ class MasterController
     private $fileDal;
     private $loginDal;
     private $loginCont;
+    private $memberV;
     public function __construct(\model\FileModel $model, \view\UploadView $uploadView, \view\View $view,\model\FileDAL $fileDAL ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\LoginController $loginC)
     {
         $this->model = $model;
@@ -26,6 +29,7 @@ class MasterController
         $this->fileDal=$fileDAL;
         $this->loginDal= $ld;
         $this->loginCont = $loginC;
+        $this->memberV = new LoggedUser();
     }
 
     public function doControl(){
@@ -37,8 +41,19 @@ class MasterController
             }
         }elseif($this->uploadView->loginLinkClicked()==true){
             $this->loginCont->controll();
+            if($this->loginView->loggedIN() == 1){
+                $this->uploadView->redirect();
+            }
+
         }else{
             $this->view->showFileList();
         }
+        if($this->memberV->memberPage()==true){
+            $this->memberV->render();
+        }
+        if($this->memberV->getLogout()==true){
+            $this->memberV->doLogout();
+        }
+
     }
 }

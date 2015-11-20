@@ -6,6 +6,8 @@
  * Time: 18:47
  */
 namespace controller;
+use view\UploadView;
+
 class LoginController{
 
     private $view;
@@ -16,24 +18,16 @@ class LoginController{
     {
         $this->view = $view;
         $this->loginView = $lv;
-
         $this->loginDal= $ld;
+
     }
 
     public function controll(){
-
         $this->loginView->render();
-
-        if($this->loginView->wantToLogin() == true){
+        if($this->loginView->loggedIN()==1){
+            $this->view->showFileList();
+        }elseif($this->loginView->wantToLogin() == true){
             $this->loginView->login();
-            var_dump($this->loginView->getLoginOK());
-            if($this->loginDal->loggedIn()==true){
-                $this->loginView->setLoginOK();
-                $this->view->showFileList();
-            }else{
-
-                $this->loginView->setLoginFailed();
-            }
         }
     }
 }
