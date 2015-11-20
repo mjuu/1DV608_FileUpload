@@ -6,22 +6,24 @@
  * Time: 20:38
  */
 namespace controller;
-//require_once("/model/FileModel.php");
 
-use view\View;
 
 class MasterController
 {
     private $uploadView;
     private $model;
     private $view;
-    private $fileTest;
-    public function __construct(\model\FileModel $model, \view\UploadView $uploadView, View $view, \model\FileDAL $fileTest)
+    private $lv;
+    private $fileDal;
+    private $loginDal;
+    public function __construct(\model\FileModel $model, \view\UploadView $uploadView, \view\View $view,\model\FileDAL $fileDAL ,\view\LoginView $lv, \model\LoginDAL $ld)
     {
         $this->model = $model;
         $this->uploadView = $uploadView;
         $this->view = $view;
-        $this->fileTest = $fileTest;
+        $this->lv = $lv;
+        $this->fileDal=$fileDAL;
+        $this->loginDal= $ld;
     }
 
     public function doControl(){
@@ -29,13 +31,21 @@ class MasterController
         if($this->uploadView->uploadLinkClicked()==true){
             $this->uploadView->response();
             if($this->uploadView->submitFile()==true){
-                $this->fileTest->fileUpload();
-                //$this->uploadView->doUpload();
-            }else{
+                $this->fileDal->fileUpload();
+            }
+        }elseif($this->uploadView->loginLinkClicked()==true){
+            $this->lv->render();
+            if($this->lv->wantToLogin() == true){
+                $this->loginDal->doLogin();
+                if($this->loginDal == true){
+                    $this->lv->setLoginOK();
+                $this->view->showFileList();
+                }else{
+                    $this->lv->setLoginFailed();
+                }
 
             }
         }else{
-
             $this->view->showFileList();
         }
     }

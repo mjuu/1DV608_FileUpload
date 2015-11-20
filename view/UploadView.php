@@ -17,7 +17,8 @@ class UploadView{
     private static $backButton = "";
     private static $messageId = "";
     public  static $messageToUsr="";
-    private static $uploadURL = "up";
+    private static $uploadURL = "upload";
+    private static $loginURL = "login";
 
 
     public function response(){
@@ -27,19 +28,6 @@ class UploadView{
         echo $this->generateUploadFormHTML($message);
 
     }
-
-    public function doUpload(){
-        var_dump($this->getFile());
-            $this->uploadFile();
-            if($this->uploadFile()==1){
-                echo $this->generateUploadFormHTML("success");
-            }else{
-                echo $this->generateUploadFormHTML("fail");
-            }
-}
-
-
-
 
     public function uploadFile()
     {
@@ -110,11 +98,17 @@ class UploadView{
     public function uploadLinkClicked(){
         return isset($_GET[self::$uploadURL]);
     }
-    public function showUpload(){
+    public function showUploadButton(){
         return "<a href='?" . self::$uploadURL . "'>Upload a file</a>";
     }
     public function showBackButton(){
         return "<a href='?" . self::$backButton. "'> Back to Start</a>";
+    }
+    public function showloginButton(){
+        return "<a href='?" . self::$loginURL. "'> Login</a>";
+    }
+    public function loginLinkClicked(){
+        return isset($_GET[self::$loginURL]);
     }
     public function setMessage($message){
     }

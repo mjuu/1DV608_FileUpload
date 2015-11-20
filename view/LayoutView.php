@@ -6,7 +6,7 @@
  * Time: 13:27
  */
 namespace view;
-class LayoutView
+class LayoutView1
 {
 
     public function render(View $v, \view\UploadView $up)
@@ -23,6 +23,7 @@ class LayoutView
         <h1>Assignment 2</h1>
 
         <?php
+
 
         if (!$up->uploadLinkClicked()) {
 

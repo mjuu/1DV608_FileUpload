@@ -9,5 +9,7 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'file_uploads');
-define('DB_TABELL','file_uploads');
+define('DB_NAMEFILE', 'file_uploads');
+define('DB_TABELLFILE','file_uploads');
+define('DB_LOGIN_NAME', 'login');
+define('DB_LOGIN_TABLE','members');

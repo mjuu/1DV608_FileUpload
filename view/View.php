@@ -23,7 +23,8 @@ class View{
         $showTabell->showTabell();
 
 
-        echo "<br>".$uploadBTN->showUpload();
+        echo "<br>".$uploadBTN->showloginButton();
+        echo "<br>".$uploadBTN->showUploadButton();
 
     }
 

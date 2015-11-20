@@ -20,7 +20,7 @@ class FileDAL
 
     public function __construct(){
 
-        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME;
+        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAMEFILE;
         try {
             $this->pdo = new \PDO($dsn, DB_USER, DB_PASS);
         } catch (\PDOException $e) {
@@ -69,7 +69,7 @@ class FileDAL
         //$filetype = 'exe';
         //$fileSize = 14;
         //$sql = "INSERT INTO file_uploads(id,file,type,size) VALUES('' ,:file,:filetype,:filesize)";
-        $sql = "INSERT INTO " . DB_TABELL . "(id,file,type,size) VALUES('' ,:file,:filetype,:filesize)";
+        $sql = "INSERT INTO " . DB_TABELLFILE . "(id,file,type,size) VALUES('' ,:file,:filetype,:filesize)";
 
         $query = $this->pdo->prepare($sql);
         $query->bindParam(':file', $this->file);
@@ -81,7 +81,7 @@ class FileDAL
 
     public function showTabell()
     {
-        $sql = "SELECT * FROM ".DB_TABELL;
+        $sql = "SELECT * FROM ".DB_TABELLFILE;
         $query = $this->pdo->prepare($sql);
         $query->execute();
         $results = $query->fetchAll();
