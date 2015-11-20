@@ -16,7 +16,7 @@ class LoggedUser{
 
     public function render(){
         $showTabell = new \model\FileDAL();
-        
+
         $showTabell->showTabell();
         $user =$_SESSION['user'];
 

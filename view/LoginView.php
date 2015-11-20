@@ -20,23 +20,19 @@ class LoginView{
     public  $usernameStatus = false;
     public  $passwordStatus = false;
     public  $loginFailed = false;
-    public  $loggedin=-1;
+    public  $loggedin;
     public $loginDAL;
 
     public function __construct(){
         $this->loginDAL = new LoginDAL();
-        $this->loggedin =false;
+        $this->loggedin =-1;
 }
 
     public function render(){
-        if($this->loggedIN() ==0 || -1){
+        if($this->loggedIN() ==0||-1 ){
             $this->doLogin();
         }
-        elseif($this->loggedIN() == 1){
-          //  echo $this->generateLoginFormHTML("logged in");
-            echo 'logged in';
 
-        }
     }
 
     public function login(){
@@ -45,11 +41,14 @@ class LoginView{
 
     public function  doLogin(){
         $message='';
-        echo $this->loggedin;
-        if($this->loggedIN() ==-1 ){
+        //echo $this->loggedin;
+
+        if(!$this->wantToLogin()==true ){
             $message="";
         }
-        elseif($this->getUsername()==false || $this->getUsername()==''){
+        elseif($this->wantToLogin()==true && $this->getUsername()==false || $this->getUsername()==''){
+            $message="empty username";
+        }elseif($this->wantToLogin()==true &&$this->getUsername()==''){
             $message="wrong username";
         }
         elseif($this->getPassword()==false || $this->getPassword()==''){
@@ -95,6 +94,7 @@ class LoginView{
             if($fd ==1){
                return $this->loggedin=1;
             }else{
+                $this->loginFailed == true;
                 return $this->loggedin = -1;
             }
         }
@@ -126,5 +126,7 @@ class LoginView{
     public static function getPassword(){
         if(isset($_POST[self::$password]))
           return $_POST[self::$password];
+        else
+            return '';
     }
 }

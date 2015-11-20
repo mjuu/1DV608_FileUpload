@@ -39,13 +39,13 @@ class LoginDAL{
 
         //var_dump($result1);
         if($result1==false){
-            echo 'username fail <p>';
+         //   echo 'username fail <p>';
            // var_dump($result1);
             $this->error =1;
             $this->username=false;
 
         }else{
-            echo 'username ok <p>';
+          //  echo 'username ok <p>';
             //$this->error=3;
             $this->username = true;
         }
@@ -60,31 +60,22 @@ class LoginDAL{
 
        // var_dump($result2);
         if($result2==false){
-            echo 'pass fail <p>';
+            //echo 'pass fail <p>';
             $this->error=2;
             $this->password=false;
 
         }else{
-            echo 'pass ok <p>';
-            //$this->error=4;
+            //echo 'pass ok <p>';
             $this->password =true;
         }
-      //  var_dump($this->getUsernameStatus());
-        //var_dump($this->getPasswordStatus());
-        //var_dump($this->loggedIn());
-       // $tes = new LoginView();
-        //$tes->setLoginOK();
+
         $_SESSION['user']= $username;
         $_SESSION['pass']= $pass;
 
-        //$_SESSION['loggedIn'] =$this->loggedIn();
-
         if($result1 != false & $result2 !=false){
             $_SESSION['loggedIn'] =$this->loggedIn;
-          //  echo $fd = $_SESSION['loggedIn'];
         }else{
             $_SESSION['loggedIn'] =$this->notLoggedIn;
-            //echo $fd = $_SESSION['loggedIn'];
         }
 
 }
