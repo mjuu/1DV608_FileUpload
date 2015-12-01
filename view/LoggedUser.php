@@ -15,14 +15,13 @@ class LoggedUser{
     }
 
     public function render(){
-        $showTabell = new \model\FileDAL();
+        $showTabell = new \view\FileView();
 
-        $showTabell->showTabell();
+        $showTabell->showPrivateFileList();
         $user =$_SESSION['user'];
 
         echo 'welcome '.$user.
-         "<br>".
-
+         '<p>'.
 
             $this->logoutBTN();
     }

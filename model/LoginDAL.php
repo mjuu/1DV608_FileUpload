@@ -7,17 +7,14 @@
  */
 namespace model;
 
-use view\LoginView;
-
 class LoginDAL{
     public $error;
     public $username;
     public $password;
     public $loggedIn = true;
     public $notLoggedIn = -1;
+    private $pdo;
     public function __construct(){
-
-
 
         $dsn = 'mysql:host=' . DB_HOST . ';dbname=' .DB_LOGIN_NAME;
         try {
@@ -25,7 +22,6 @@ class LoginDAL{
         } catch (\PDOException $e) {
             exit('Connection error');
         }
-
     }
 
     public function doLogin($username, $pass){
@@ -36,17 +32,11 @@ class LoginDAL{
         $query->execute();
         $result1 = $query->fetchColumn();
 
-
-        //var_dump($result1);
         if($result1==false){
-         //   echo 'username fail <p>';
-           // var_dump($result1);
             $this->error =1;
             $this->username=false;
 
         }else{
-          //  echo 'username ok <p>';
-            //$this->error=3;
             $this->username = true;
         }
 
@@ -57,15 +47,11 @@ class LoginDAL{
         $query->execute();
         $result2 = $query->fetchColumn();
 
-
-       // var_dump($result2);
         if($result2==false){
-            //echo 'pass fail <p>';
             $this->error=2;
             $this->password=false;
 
         }else{
-            //echo 'pass ok <p>';
             $this->password =true;
         }
 

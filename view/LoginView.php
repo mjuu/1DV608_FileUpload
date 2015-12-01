@@ -32,7 +32,6 @@ class LoginView{
         if($this->loggedIN() ==0||-1 ){
             $this->doLogin();
         }
-
     }
 
     public function login(){
@@ -63,8 +62,6 @@ class LoginView{
         $this->message =$message;
     }
     private function generateLoginFormHTML($message) {
-       // var_dump($this->loggedin);
-       // echo "login ok: ".var_dump($this->getLoginOK());
         $up= new UploadView();
         echo $up->showBackButton();
         return '

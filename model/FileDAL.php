@@ -7,99 +7,73 @@
  */
 namespace model;
 
+use view\FileView;
 use view\UploadView;
+require_once("view/FileView.php");
+require_once("model/DBConn.php");
 
 class FileDAL
 {
-
     private $pdo;
+    private $DBConn;
+
     private $file = '';
     private $filetype = '';
     private $fileSize = '';
     private $filePath = "uploads/";
+    private $fileView;
+    private $upView;
 
     public function __construct(){
+        $this->DBConn = new DBConn();
+        $this->pdo= $this->DBConn->conn();
 
-        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAMEFILE;
-        try {
-            $this->pdo = new \PDO($dsn, DB_USER, DB_PASS);
-        } catch (\PDOException $e) {
-            exit('Connection error');
-        }
+        $this->fileView = new FileView();
+        $this->upView = new UploadView();
 
     }
 
     public function fileUpload(){
 
-        $upView = new UploadView();
-        $this->fileSize =$_FILES[$upView->getFile()]['size'];
-        $this->filetype = $_FILES[$upView->getFile()]["type"];
-        $this->file =$this->filePath.($_FILES[$upView->getFile()]['name']);
+        $this->fileSize =$_FILES[$this->upView->getFile()]['size'];
+        $this->filetype = $_FILES[$this->upView->getFile()]["type"];
+        $this->file =$this->filePath.($_FILES[$this->upView->getFile()]['name']);
 
-        if ($_FILES[$upView->getFile()]['size'] < 10000000) {
-            if ($_FILES[$upView->getFile()]["type"] == "image/png" || "image/jpg" || "image/jpeg") {
-                if ($_FILES[$upView->getFile()]["error"] == 0) {
+        if ($_FILES[$this->upView->getFile()]['size'] < 10000000) {
+            if ($_FILES[$this->upView->getFile()]["type"] == "image/png" || "image/jpg" || "image/jpeg") {
+                if ($_FILES[$this->upView->getFile()]["error"] == 0) {
                     $filePath = "uploads/";
-                  //  $filePathToSLQTable = $filePath.($_FILES[$upView->getFile()]['name']);
-                    $filePath = $filePath . basename($_FILES[$upView->getFile()]['name']);
+                    $filePath = $filePath . basename($_FILES[$this->upView->getFile()]['name']);
 
-                    if (move_uploaded_file($_FILES[$upView->getFile()]['tmp_name'], $filePath)) {
-                        echo "The file " . basename($_FILES[$upView->getFile()]['name']) . " was uploaded successfully.";
-                        echo '<p>'.$this->file;
-                        echo '<p>'.$this->filetype;
-                        echo '<p>'.$this->fileSize;
+                    if (move_uploaded_file($_FILES[$this->upView->getFile()]['tmp_name'], $filePath)) {
+                        $this->fileView->FileUploadEvent("The file " . basename($_FILES[$this->upView->getFile()]['name']) . " was uploaded successfully.");
+                        $this->fileView->FileUploadEvent(
+                                                        '<p>'.'URL: '."<a href='" . $this->file. "'> $this->file</a>".
+                                                        '<p>'.'File type: '.$this->filetype.
+                                                        '<p>'.'File size: '.$this->fileSize);
                         $this->uploadSQL();
                     } else {
-                        echo "A problem occurred while uploading your file, please try again.";
+                        $this->fileView->FileUploadEvent("A problem occurred while uploading your file, please try again.");
                     }
                 } else {
-                    echo "Something went wrong...";
+                    $this->fileView->FileUploadEvent("Something went wrong...");
                 }
             } else {
-                echo "Wrong filetype..";
+                $this->fileView->FileUploadEvent("Wrong filetype..");
             }
         } else {
-            echo "File is to large";
+            $this->fileView->FileUploadEvent("File is to large");
         }
-
     }
 
     public function uploadSQL(){
-        //$file = 'testfile';
-        //$filetype = 'exe';
-        //$fileSize = 14;
-        //$sql = "INSERT INTO file_uploads(id,file,type,size) VALUES('' ,:file,:filetype,:filesize)";
         $sql = "INSERT INTO " . DB_TABELLFILE . "(id,file,type,size) VALUES('' ,:file,:filetype,:filesize)";
 
         $query = $this->pdo->prepare($sql);
         $query->bindParam(':file', $this->file);
         $query->bindParam(':filetype', $this->filetype);
         $query->bindParam(':filesize', $this->fileSize);
-        echo "Query is sending";
         return $query->execute();
-    }
-
-    public function showTabell()
-    {
-        $sql = "SELECT * FROM ".DB_TABELLFILE;
-        $query = $this->pdo->prepare($sql);
-        $query->execute();
-        $results = $query->fetchAll();
-
-        foreach ($results as $a) {
-            $id = $a["id"];
-            $file = $a['file'];
-            $type = $a['type'];
-            $size = $a['size'];
-            //ID= ".$id."<br>
-            echo "File:"."<a href='" . $file . "'>$file</a>";
-            echo "
-                   Type: " . $type . "<br>
-                   Size: " . $size . "<br>
-                   <br>
-            ";
-        }
-        return;
     }
 
 }

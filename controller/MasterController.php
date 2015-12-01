@@ -13,16 +13,14 @@ use view\LoggedUser;
 class MasterController
 {
     private $uploadView;
-    private $model;
     private $view;
     private $loginView;
     private $fileDal;
     private $loginDal;
     private $loginCont;
     private $memberV;
-    public function __construct(\model\FileModel $model, \view\UploadView $uploadView, \view\View $view,\model\FileDAL $fileDAL ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\LoginController $loginC)
+    public function __construct(\view\UploadView $uploadView, \view\View $view,\model\FileDAL $fileDAL ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\LoginController $loginC)
     {
-        $this->model = $model;
         $this->uploadView = $uploadView;
         $this->view = $view;
         $this->loginView = $lv;
@@ -42,7 +40,7 @@ class MasterController
                 $this->fileDal->fileUpload();
             }
         }elseif($this->uploadView->loginLinkClicked()==true){
-            $this->loginCont->controll();
+            $this->loginCont->control();
             if($this->loginView->loggedIN() == 1){
                 $this->uploadView->redirect();
             }

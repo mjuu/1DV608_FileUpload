@@ -8,20 +8,16 @@
 
 namespace view;
 
-
-use model\FileDAL;
-
 class View{
 
     public function showFileList(){
         //phpinfo();
         $uploadBTN = new UploadView();
-        $showTabell = new FileDAL();
+        $showTabellView = new FileView();
 
         echo "<H1>File Upload</H1>";
-        echo "<p><H2>List</H2>";
-        $showTabell->showTabell();
-
+        echo "<p><H2>Public List</H2>";
+        $showTabellView->showPublicFileList();
 
         echo "<br>".$uploadBTN->showloginButton();
         echo "<br>".$uploadBTN->showUploadButton();

@@ -6,7 +6,6 @@
  * Time: 18:47
  */
 namespace controller;
-use view\UploadView;
 
 class LoginController{
 
@@ -19,10 +18,9 @@ class LoginController{
         $this->view = $view;
         $this->loginView = $lv;
         $this->loginDal= $ld;
-
     }
 
-    public function controll(){
+    public function control(){
         $this->loginView->render();
         if($this->loginView->loggedIN()==1){
             $this->view->showFileList();
