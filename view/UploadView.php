@@ -81,7 +81,7 @@ class UploadView{
     }
 
     public function getFile(){
-    return self::$file;
+    return trim(self::$file);
     }
 
     public function privateUpload(){
