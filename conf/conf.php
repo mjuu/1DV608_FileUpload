@@ -11,5 +11,6 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAMEFILE', 'file_uploads');
 define('DB_TABELLFILE','file_uploads');
+define('DB_TABELLFILEPRIVATE','private_file_uploads');
 define('DB_LOGIN_NAME', 'login');
 define('DB_LOGIN_TABLE','members');
