@@ -55,24 +55,29 @@ class FileDAL
         $this->fileSize =$_FILES[$this->upView->getFile()]['size'];
         $this->filetype = $_FILES[$this->upView->getFile()]["type"];
         if($type == 1){
+
             $this->file =$this->filePath.($_FILES[$this->upView->getFile()]['name']);
-          $this->removeChar();
+            $this->file= $this->removeChar($this->file);
+
         }else{
 
             $this->file =$this->filePathPrivate.($_FILES[$this->upView->getFile()]['name']);
+            $this->file = $this->removeChar($this->file);
         }
 
-        $this->removeChar();
-        if ($_FILES[$this->upView->getFile()]['size'] < 100000000) {
+
+        if ($_FILES[$this->upView->getFile()]['size'] < 20000000) {
             if ($_FILES[$this->upView->getFile()]["type"] == "image/png" || "image/jpg" || "image/jpeg") {
                 if ($_FILES[$this->upView->getFile()]["error"] == 0) {
                     if($type == 1){
                         $filePath = "uploads/";
+                       // $filePath = $this->removeChar($filePath);
                     }else{
                         $filePath = "privateUploads/";
+                        //$filePath = $this->removeChar($filePath);
                     }
 
-                    $filePath = $filePath . basename($_FILES[$this->upView->getFile()]['name']);
+                    $filePath = $this->removeChar($filePath . basename($_FILES[$this->upView->getFile()]['name']));
 
                     if (move_uploaded_file($_FILES[$this->upView->getFile()]['tmp_name'], $filePath)) {
                         $this->fileView->FileUploadEvent("The file " . basename($_FILES[$this->upView->getFile()]['name']) . " was uploaded successfully.");
@@ -124,13 +129,21 @@ class FileDAL
         }
     }
 
-    public function removeChar(){
-        $this->file = str_replace(' ','',$this->file);
-        $this->file = str_replace('?','_',$this->file);
-        $this->file = str_replace('!','_',$this->file);
-        $this->file = str_replace('&','_',$this->file);
-        $this->file = str_replace('"','_',$this->file);
-        $this->file = str_replace('\'','_',$this->file);
+    public function removeChar($str){
+        $str = str_replace(' ','',$str);
+        $str = str_replace('é','',$str);
+        $str = str_replace('?','_',$str);
+        $str = str_replace('!','_',$str);
+        $str = str_replace('&','_',$str);
+        $str = str_replace('"','_',$str);
+
+        $str = str_replace(',','_',$str);
+       // $this->file = str_replace('.','_',$this->file);
+        $str = str_replace('-','_',$str);
+        $str = str_replace('\'','_',$str);
+
+        $str= preg_replace( '[/^a-zA-Z0-9]', '', $str );
+        return $str;
     }
 
 }
