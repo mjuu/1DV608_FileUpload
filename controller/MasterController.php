@@ -37,7 +37,7 @@ class MasterController
         if($this->uploadView->uploadLinkClicked()==true){
             $this->uploadView->response();
             if($this->uploadView->submitFile()==true){
-                $this->fileDal->fileUpload();
+                $this->fileDal->publicUpload();
             }
         }elseif($this->uploadView->loginLinkClicked()==true){
             $this->loginCont->control();
@@ -47,9 +47,18 @@ class MasterController
         }elseif($this->loginView->loggedIN()==1) {
             if ($this->memberV->memberPage() == true) {
                 $this->memberV->render();
+
             }
             if ($this->memberV->getLogout() == true) {
                 $this->memberV->doLogout();
+            }
+
+            //user want to upload
+            if($this->memberV->privateUploadClicked() == true){
+                $this->uploadView->privateResponse();
+                if($this->uploadView->submitFile()==true){
+                    $this->fileDal->privateUpload();
+                }
             }
         }else{
             $this->view->showFileList();
