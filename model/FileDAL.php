@@ -21,9 +21,13 @@ class FileDAL
     private $filetype = '';
     private $fileSize = '';
     private $filePath = "uploads/";
+    private $filePathPrivate = "privateUploads/";
     private $fileView;
     private $upView;
 
+    /**
+     * FileDAL constructor.
+     */
     public function __construct(){
         $this->DBConn = new DBConn();
         $this->pdo= $this->DBConn->conn();
@@ -33,16 +37,39 @@ class FileDAL
 
     }
 
-    public function fileUpload(){
+    public function publicUpload(){
+        $this->fileUpload(1);
+    }
+
+    public function privateUpload(){
+        $this->fileUpload(2);
+    }
+
+    /**
+     * Uploads a file to the server
+     * Returns message about the file
+     * or if error occurred a error message will be returned
+     */
+    public function fileUpload($type){
 
         $this->fileSize =$_FILES[$this->upView->getFile()]['size'];
         $this->filetype = $_FILES[$this->upView->getFile()]["type"];
-        $this->file =$this->filePath.($_FILES[$this->upView->getFile()]['name']);
+        if($type == 1){
+            $this->file =$this->filePath.($_FILES[$this->upView->getFile()]['name']);
+        }else{
+            $this->file =$this->filePathPrivate.($_FILES[$this->upView->getFile()]['name']);
+        }
+
 
         if ($_FILES[$this->upView->getFile()]['size'] < 10000000) {
             if ($_FILES[$this->upView->getFile()]["type"] == "image/png" || "image/jpg" || "image/jpeg") {
                 if ($_FILES[$this->upView->getFile()]["error"] == 0) {
-                    $filePath = "uploads/";
+                    if($type == 1){
+                        $filePath = "uploads/";
+                    }else{
+                        $filePath = "privateUploads/";
+                    }
+
                     $filePath = $filePath . basename($_FILES[$this->upView->getFile()]['name']);
 
                     if (move_uploaded_file($_FILES[$this->upView->getFile()]['tmp_name'], $filePath)) {
@@ -51,7 +78,7 @@ class FileDAL
                                                         '<p>'.'URL: '."<a href='" . $this->file. "'> $this->file</a>".
                                                         '<p>'.'File type: '.$this->filetype.
                                                         '<p>'.'File size: '.$this->fileSize);
-                        $this->uploadSQL();
+                        $this->uploadSQL($type);
                     } else {
                         $this->fileView->FileUploadEvent("A problem occurred while uploading your file, please try again.");
                     }
@@ -66,14 +93,33 @@ class FileDAL
         }
     }
 
-    public function uploadSQL(){
-        $sql = "INSERT INTO " . DB_TABELLFILE . "(id,file,type,size) VALUES('' ,:file,:filetype,:filesize)";
+    /**
+     * Insert file properties to the database
+     * @return bool
+     */
+    public function uploadSQL($type){
+        if ($type == 1) {
+            $sql = "INSERT INTO " . DB_TABELLFILE . "(id,file,type,size) VALUES('' ,:file,:filetype,:filesize)";
 
-        $query = $this->pdo->prepare($sql);
-        $query->bindParam(':file', $this->file);
-        $query->bindParam(':filetype', $this->filetype);
-        $query->bindParam(':filesize', $this->fileSize);
-        return $query->execute();
+            $query = $this->pdo->prepare($sql);
+            $query->bindParam(':file', $this->file);
+            $query->bindParam(':filetype', $this->filetype);
+            $query->bindParam(':filesize', $this->fileSize);
+            return $query->execute();
+        }elseif($type == 2){
+
+            $username =$_SESSION['user'];
+
+            $sql = "INSERT INTO " . DB_TABELLFILEPRIVATE . "(id,username,file,type,size) VALUES('' ,:username,:file,:filetype,:filesize)"; //PRIVATE TABLE
+
+            $query = $this->pdo->prepare($sql);
+            $query->bindParam(':username', $username);
+            $query->bindParam(':file', $this->file);
+            $query->bindParam(':filetype', $this->filetype);
+            $query->bindParam(':filesize', $this->fileSize);
+            return $query->execute();
+
+        }
     }
 
 }
