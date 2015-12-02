@@ -79,7 +79,8 @@ class FileDAL
 
                     $filePath = $this->removeChar($filePath . basename($_FILES[$this->upView->getFile()]['name']));
 
-                    if (move_uploaded_file($_FILES[$this->upView->getFile()]['tmp_name'], $filePath)) {
+                    $temp_name = $this->removeChar($_FILES[$this->upView->getFile()]['tmp_name']);
+                    if (move_uploaded_file($temp_name, $filePath)) { //$_FILES[$this->upView->getFile()]['tmp_name'], $filePath)
                         $this->fileView->FileUploadEvent("The file " . basename($_FILES[$this->upView->getFile()]['name']) . " was uploaded successfully.");
                         $this->fileView->FileUploadEvent(
                                                         '<p>'.'URL: '."<a href='" . $this->file. "'> $this->file</a>".
@@ -136,10 +137,11 @@ class FileDAL
         $str = str_replace('!','_',$str);
         $str = str_replace('&','_',$str);
         $str = str_replace('"','_',$str);
-
         $str = str_replace(',','_',$str);
        // $this->file = str_replace('.','_',$this->file);
         $str = str_replace('-','_',$str);
+        $str = str_replace('–','_',$str);
+
         $str = str_replace('\'','_',$str);
 
         $str= preg_replace( '[/^a-zA-Z0-9]', '', $str );
