@@ -39,8 +39,34 @@ class UploadView{
 					<label for="'.self::$file.'">File :</label>
 					<input type="file" id="'.self::$file.'" name="'.self::$file.'"/>
 
-					<label for="'.self::$private.'">Private :</label>
-					<input type="checkbox" id="'.self::$private.'" name="'.self::$private.'"/>
+					<input type="submit" id="submit" name="'.self::$upload.'" value="Upload"/>
+				</fieldset>
+			</form>
+			<br>
+
+		';
+    }
+    public function privateResponse(){
+        $message = "You can upload any file. <br>
+        File size limit is 20MB. <br>
+        Private file uploads will only be accessible from member areas";
+
+        echo $this->generateUploadFormHTMLPrivate($message);
+
+    }
+
+    public function generateUploadFormHTMLPrivate($message) {
+
+        echo $this->showBackToMemberAreaButton();
+        return '<p>
+
+                 <form action="" method="post" enctype="multipart/form-data">
+				<fieldset>
+					<legend>Upload file</legend>
+					<p id="' .self::$message.'">'.$message.'</p>
+
+					<label for="'.self::$file.'">File :</label>
+					<input type="file" id="'.self::$file.'" name="'.self::$file.'"/>
 
 					<input type="submit" id="submit" name="'.self::$upload.'" value="Upload"/>
 				</fieldset>
@@ -74,6 +100,9 @@ class UploadView{
         return "<a href='?" . self::$backButton. "'> Back to Start</a>";
     }
 
+    public function showBackToMemberAreaButton(){
+        return "<a href='?member" . self::$backButton. "'> Back to member area</a>";
+    }
     public function showloginButton(){
         return "<a href='?" . self::$loginURL. "'> Login</a>";
     }
