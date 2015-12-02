@@ -20,7 +20,23 @@ class FileView{
     }
 
     public function showPrivateFileList(){
-        echo "empty list".'<br>';
+        echo '<H2>This is your private files</H1>';
+        $list1 = $this->DBConn->getPrivateFileList();
+        foreach ($list1 as $a) {
+            $id = $a["id"];
+            $username = $a['username'];
+            $file = $a['file'];
+            $type = $a['type'];
+            $size = $a['size'];
+            //ID= ".$id."<br>
+            echo "File:"."<a href='" . $file . "'>$file</a>";
+            echo "
+                   Type: " . $type . "<br>
+                   Size: " . $size . "<br>
+                   <br>
+            ";
+        }
+        return;
     }
     public function showPublicFileList(){
         $list = $this->DBConn->getPublicFileList();
