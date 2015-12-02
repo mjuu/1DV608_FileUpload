@@ -56,12 +56,14 @@ class FileDAL
         $this->filetype = $_FILES[$this->upView->getFile()]["type"];
         if($type == 1){
             $this->file =$this->filePath.($_FILES[$this->upView->getFile()]['name']);
+          $this->removeChar();
         }else{
+
             $this->file =$this->filePathPrivate.($_FILES[$this->upView->getFile()]['name']);
         }
 
-
-        if ($_FILES[$this->upView->getFile()]['size'] < 10000000) {
+        $this->removeChar();
+        if ($_FILES[$this->upView->getFile()]['size'] < 100000000) {
             if ($_FILES[$this->upView->getFile()]["type"] == "image/png" || "image/jpg" || "image/jpeg") {
                 if ($_FILES[$this->upView->getFile()]["error"] == 0) {
                     if($type == 1){
@@ -120,6 +122,15 @@ class FileDAL
             return $query->execute();
 
         }
+    }
+
+    public function removeChar(){
+        $this->file = str_replace(' ','',$this->file);
+        $this->file = str_replace('?','_',$this->file);
+        $this->file = str_replace('!','_',$this->file);
+        $this->file = str_replace('&','_',$this->file);
+        $this->file = str_replace('"','_',$this->file);
+        $this->file = str_replace('\'','_',$this->file);
     }
 
 }
