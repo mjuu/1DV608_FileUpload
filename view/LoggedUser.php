@@ -10,30 +10,40 @@ class LoggedUser{
 
     private static $member = "member";
     private static $logout = "logout";
-    public function __construct()
-    {
+    private static $privateUpload = "privUp";
+    private $fileView;
+    public function __construct(){
+        $this->fileView = new FileView();
     }
 
     public function render(){
-        $showTabell = new \view\FileView();
 
-        $showTabell->showPrivateFileList();
         $user =$_SESSION['user'];
 
-        echo 'welcome '.$user.
-         '<p>'.
-
-            $this->logoutBTN();
+        echo '<H1>Welcome '.$user.' to the member area</H1>';
+        echo $this->fileView->showPrivateFileList();
+        echo '<H2> Public file list</H2>';
+        echo $this->fileView->showPublicFileList();
+        echo $this->privateUploadBTN().
+             '<p>'.
+             $this->logoutBTN();
     }
     public function memberPage(){
         return isset($_GET[self::$member]);
     }
+
     public function getLogout(){
         return isset($_GET[self::$logout]);
     }
 
+    public function privateUploadBTN(){
+        return "<a href='?" . self::$privateUpload. "'> Private upload</a>";
+    }
     public function logoutBTN(){
         return "<a href='?" . self::$logout. "'> Logout</a>";
+    }
+    public function privateUploadClicked(){
+        return isset($_GET[self::$privateUpload]);
     }
     public function doLogout(){
         session_destroy();
