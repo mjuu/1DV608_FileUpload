@@ -14,6 +14,10 @@ class LoginDAL{
     public $loggedIn = true;
     public $notLoggedIn = -1;
     private $pdo;
+
+    /**
+     * LoginDAL constructor.
+     */
     public function __construct(){
 
         $dsn = 'mysql:host=' . DB_HOST . ';dbname=' .DB_LOGIN_NAME;
@@ -24,6 +28,14 @@ class LoginDAL{
         }
     }
 
+    /**
+     * Function for login.
+     * Checks username and password.
+     * If user enter correct credentials a session will be set to "Logged in".
+     * If username or password don't match a error code will be set.
+     * @param $username
+     * @param $pass
+     */
     public function doLogin($username, $pass){
         //$sql = "SELECT * FROM ".DB_LOGIN_TABLE."WHERE username = :usernameInput AND password = :passwordInput";
         $sql = "SELECT username FROM members WHERE username = :usernameInput";
@@ -61,10 +73,10 @@ class LoginDAL{
         if($result1 != false & $result2 !=false){
             $_SESSION['loggedIn'] =$this->loggedIn;
         }else{
-            $_SESSION['loggedIn'] =$this->notLoggedIn;
+            $_SESSION['NotLoggedIn'] =$this->notLoggedIn;
         }
+    }
 
-}
     public function getLoginStatus(){
         return $this->error;
     }
