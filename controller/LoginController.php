@@ -28,4 +28,11 @@ class LoginController{
             $this->loginView->login();
         }
     }
+
+    public function registerControl(){
+        $this->loginView->doRegister();
+        if($this->loginView->wantToRegister() == true){
+            $this->loginView->register();
+        }
+    }
 }

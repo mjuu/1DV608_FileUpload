@@ -47,7 +47,7 @@ class LoginView{
             $this->loginDAL->doRegisterNewUser($this->getUsername(),$this->getPassword());
             echo "User registered!";
         }else{
-            
+
         }
 
     }

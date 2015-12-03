@@ -39,7 +39,10 @@ class MasterController
             if($this->uploadView->submitFile()==true){
                 $this->fileDal->publicUpload();
             }
-        }elseif($this->uploadView->loginLinkClicked()==true){
+        }elseif($this->loginView->wantToRegisterURL()==true){
+            $this->loginCont->registerControl();
+
+        } elseif($this->uploadView->loginLinkClicked()==true){
             $this->loginCont->control();
             if($this->loginView->loggedIN() == 1){
                 $this->uploadView->redirect();
