@@ -56,8 +56,8 @@ class UploadView{
     }
 
     public function generateUploadFormHTMLPrivate($message) {
-
         echo $this->showBackToMemberAreaButton();
+
         return '<p>
 
                  <form action="" method="post" enctype="multipart/form-data">
@@ -96,6 +96,7 @@ class UploadView{
         return "<a href='?" . self::$uploadURL . "'>Upload a file</a>";
     }
 
+
     public function showBackButton(){
         return "<a href='?" . self::$backButton. "'> Back to Start</a>";
     }
@@ -104,7 +105,7 @@ class UploadView{
         return "<a href='?member" . self::$backButton. "'> Back to member area</a>";
     }
     public function showloginButton(){
-        return "<a href='?" . self::$loginURL. "'> Login</a>";
+        return "<a href='?" . self::$loginURL. "'> Sign in</a>";
     }
 
     public function loginLinkClicked(){

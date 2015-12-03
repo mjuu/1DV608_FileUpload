@@ -138,13 +138,12 @@ class FileDAL
         $str = str_replace('&','_',$str);
         $str = str_replace('"','_',$str);
         $str = str_replace(',','_',$str);
-       // $this->file = str_replace('.','_',$this->file);
         $str = str_replace('-','_',$str);
         $str = str_replace('–','_',$str);
-
         $str = str_replace('\'','_',$str);
 
-        $str= preg_replace( '[/^a-zA-Z0-9]', '', $str );
+        $str= preg_replace('[/^a-zA-Z0-9]', '', $str );
+        $str= preg_replace('/-+/', '-', $str);
         return $str;
     }
 

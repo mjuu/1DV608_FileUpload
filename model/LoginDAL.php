@@ -77,6 +77,16 @@ class LoginDAL{
         }
     }
 
+    public function doRegisterNewUser($username, $password){
+
+        $sql = "INSERT INTO " . DB_LOGIN_TABLE . "(user_id,username,password) VALUES('' ,:username,:password)";
+        $query = $this->pdo->prepare($sql);
+        $query->bindParam(':username', $username);
+        $query->bindParam(':password', $password);
+        return $query->execute();
+
+    }
+
     public function getLoginStatus(){
         return $this->error;
     }

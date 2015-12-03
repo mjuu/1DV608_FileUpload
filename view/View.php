@@ -11,16 +11,16 @@ namespace view;
 class View{
 
     public function showFileList(){
-        //phpinfo();
         $uploadBTN = new UploadView();
-        $showTabellView = new FileView();
+        $fileView = new FileView();
 
         echo "<H1>File Upload</H1>";
         echo "<p><H2>Public List</H2>";
-        $showTabellView->showPublicFileList();
+        $fileView->showPublicFileList();
 
         echo "<br>".$uploadBTN->showloginButton();
-        echo "<br>".$uploadBTN->showUploadButton();
+        echo ' ';
+        echo $uploadBTN->showUploadButton();
 
     }
 
