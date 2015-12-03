@@ -37,8 +37,8 @@ class LoginDAL{
      * @param $pass
      */
     public function doLogin($username, $pass){
-        //$sql = "SELECT * FROM ".DB_LOGIN_TABLE."WHERE username = :usernameInput AND password = :passwordInput";
-        $sql = "SELECT username FROM members WHERE username = :usernameInput";
+
+        $sql = "SELECT username FROM ".DB_LOGIN_TABLE." WHERE username = :usernameInput";
         $query = $this->pdo->prepare($sql);
         $query->bindParam(':usernameInput',$username);
         $query->execute();
@@ -77,6 +77,29 @@ class LoginDAL{
         }
     }
 
+    /**
+     * !NOT implemented!
+     * Check if user exist in the database.
+     * @param $username
+     * @return bool
+     */
+    public function checkUserExist($username){
+
+        $sql = "SELECT * FROM ".DB_LOGIN_TABLE." WHERE username = :usernameInput";
+        $query = $this->pdo->prepare($sql);
+        $query->bindParam(':usernameInput', $username);
+        $result = $query->fetchAll();
+
+        return $result;
+
+    }
+
+    /**
+     * Register a new user
+     * @param $username
+     * @param $password
+     * @return bool
+     */
     public function doRegisterNewUser($username, $password){
 
         $sql = "INSERT INTO " . DB_LOGIN_TABLE . "(user_id,username,password) VALUES('' ,:username,:password)";
@@ -96,6 +119,11 @@ class LoginDAL{
     public function getPasswordStatus(){
         return $this->password;
     }
+
+    /**
+     * Returns true if user is logged in
+     * @return bool
+     */
     public function loggedIn(){
         if($this->username == true){
             return true;

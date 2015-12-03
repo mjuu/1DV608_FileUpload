@@ -13,39 +13,26 @@ class FileView{
 
     private $pdo;
     private $DBConn;
-    public function __construct()
-    {
+
+    /**
+     * FileView constructor.
+     *
+     */
+    public function __construct(){
         $this->DBConn = new DBConn();
-       $this->pdo= $this->DBConn->conn();
+        $this->pdo= $this->DBConn->conn();
     }
 
+    /**
+     * Prints the private file list for the logged in user
+     */
     public function showPrivateFileList(){
         echo '<H2>This is your private files</H1>';
         $list1 = $this->DBConn->getPrivateFileList();
         foreach ($list1 as $a) {
-            $id = $a["id"];
-            $username = $a['username'];
             $file = $a['file'];
             $type = $a['type'];
             $size = $a['size'];
-            //ID= ".$id."<br>
-            echo "File:"."<a href='" . $file . "'>$file</a>";
-            echo "
-                   Type: " . $type . "<br>
-                   Size: " . $size . "<br>
-                   <br>
-            ";
-        }
-        return;
-    }
-    public function showPublicFileList(){
-        $list = $this->DBConn->getPublicFileList();
-        foreach ($list as $a) {
-            $id = $a["id"];
-            $file = $a['file'];
-            $type = $a['type'];
-            $size = $a['size'];
-            //ID= ".$id."<br>
             echo "File:"."<a href='" . $file . "'>$file</a>";
             echo "
                    Type: " . $type . "<br>
@@ -56,6 +43,29 @@ class FileView{
         return;
     }
 
+    /**
+     * Shows the public file list
+     */
+    public function showPublicFileList(){
+        $list = $this->DBConn->getPublicFileList();
+        foreach ($list as $a) {
+            $file = $a['file'];
+            $type = $a['type'];
+            $size = $a['size'];
+            echo "File:"."<a href='" . $file . "'>$file</a>";
+            echo "
+                   Type: " . $type . "<br>
+                   Size: " . $size . "<br>
+                   <br>
+            ";
+        }
+        return;
+    }
+
+    /**
+     * Prints message to the view if anny error occur
+     * @param $msg
+     */
     public function FileUploadEvent($msg){
         echo $msg;
     }

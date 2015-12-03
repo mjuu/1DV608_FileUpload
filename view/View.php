@@ -10,6 +10,10 @@ namespace view;
 
 class View{
 
+    /**
+     * Shows the main page with public file list
+     * and links to login and public upload
+     */
     public function showFileList(){
         $uploadBTN = new UploadView();
         $fileView = new FileView();

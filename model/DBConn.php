@@ -35,11 +35,15 @@ class DBConn{
         $query->execute();
        return $results = $query->fetchAll();
     }
+
+    /**
+     * Get private file list for the logged in user
+     * @return mixed
+     */
     public function getPrivateFileList(){
 
         $username1 =$_SESSION['user'];
         $sql = "SELECT * FROM ". DB_TABELLFILEPRIVATE ." WHERE username = :username";
-        //$sql = "SELECT * FROM private_file_uploads WHERE username = :username";
         $query = $this->pdo->prepare($sql);
         $query->bindParam(':username',$username1);
         $query->execute();

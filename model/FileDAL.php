@@ -37,10 +37,16 @@ class FileDAL
 
     }
 
+    /**
+     * Do public upload
+     */
     public function publicUpload(){
         $this->fileUpload(1);
     }
 
+    /**
+     * Do private upload
+     */
     public function privateUpload(){
         $this->fileUpload(2);
     }
@@ -67,20 +73,20 @@ class FileDAL
 
 
         if ($_FILES[$this->upView->getFile()]['size'] < 20000000) {
-            if ($_FILES[$this->upView->getFile()]["type"] == "image/png" || "image/jpg" || "image/jpeg") {
+            if ($_FILES[$this->upView->getFile()]["type"]) {
                 if ($_FILES[$this->upView->getFile()]["error"] == 0) {
                     if($type == 1){
                         $filePath = "uploads/";
-                       // $filePath = $this->removeChar($filePath);
+                        $filePath = $this->removeChar($filePath);
                     }else{
                         $filePath = "privateUploads/";
-                        //$filePath = $this->removeChar($filePath);
+                        $filePath = $this->removeChar($filePath);
                     }
 
                     $filePath = $this->removeChar($filePath . basename($_FILES[$this->upView->getFile()]['name']));
 
                     $temp_name = $this->removeChar($_FILES[$this->upView->getFile()]['tmp_name']);
-                    if (move_uploaded_file($temp_name, $filePath)) { //$_FILES[$this->upView->getFile()]['tmp_name'], $filePath)
+                    if (move_uploaded_file($temp_name, $filePath)) {
                         $this->fileView->FileUploadEvent("The file " . basename($_FILES[$this->upView->getFile()]['name']) . " was uploaded successfully.");
                         $this->fileView->FileUploadEvent(
                                                         '<p>'.'URL: '."<a href='" . $this->file. "'> $this->file</a>".
@@ -130,6 +136,11 @@ class FileDAL
         }
     }
 
+    /**
+     * Remove special chars from filename
+     * @param $str
+     * @return mixed
+     */
     public function removeChar($str){
         $str = str_replace(' ','',$str);
         $str = str_replace('é','',$str);

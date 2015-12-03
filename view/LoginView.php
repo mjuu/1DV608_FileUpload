@@ -12,11 +12,9 @@ use model\LoginDAL;
 class LoginView{
 
     private static $login = 'LoginView::Login';
-    private static $logout = 'LoginView::Logout';
     private static $username = 'LoginView::UserName';
     private static $password = 'LoginView::Password';
     private static $repassword = 'LoginView::rePassword';
-    private static $keep = 'LoginView::KeepMeLoggedIn';
     private static $messageId = 'LoginView::Message';
     private static $registerButton = "LoginView::register";
     private static $registerURL = "register";
@@ -27,35 +25,49 @@ class LoginView{
     public $loginDAL;
     public $regFail = true;
 
+    /**
+     * LoginView constructor.
+     */
     public function __construct(){
         $this->loginDAL = new LoginDAL();
         $this->loggedin =-1;
 }
 
+    /**
+     * If user is not logged in this will show the login page
+     */
     public function render(){
         if($this->loggedIN() ==0||-1 ){
             $this->doLogin();
         }
     }
 
+    /**
+     * Sends username and password to the login function
+     */
     public function login(){
         $this->loginDAL->doLogin($this->getUsername(),$this->getPassword());
     }
 
+    /**
+     * Register a new user.
+     * Sends the credentials to loginDAL that creates a new user.
+     */
     public function register(){
-        if($this->regFail == false){
-            $this->loginDAL->doRegisterNewUser($this->getUsername(),$this->getPassword());
-            echo "User registered!";
-        }else{
 
+        if($this->regFail == false) {
+           $this->loginDAL->doRegisterNewUser($this->getUsername(), $this->getPassword());
         }
-
     }
 
+    /**
+     * Generate the login page
+     * Checks so the input data from user is valid and then
+     * returned the correct error message to the login view.
+     */
     public function  doLogin(){
-        $message='';
-        //echo $this->loggedin;
 
+        $message='';
         if(!$this->wantToLogin()==true ){
             $message="";
         }
@@ -73,9 +85,13 @@ class LoginView{
         echo $this->generateLoginFormHTML($message);
     }
 
+    /**
+     * Generate the register page.
+     * Checks user import so the data is correct.
+     */
     public function doRegister(){
-        $message = "Enter Username and password";
 
+        $message = "Enter Username and password";
         if(!$this->wantToRegister() == true && $this->regFail==true){
             $message = "Enter Username and password";
         }
@@ -87,14 +103,19 @@ class LoginView{
             $message = "Password miss match";
         }elseif($this->wantToRegister() ==true && $this->getPassword() === $this->getRePassword()){
             $this->regFail =false;
+            $message = "Register completed! Please use the new credentials";
         }
 
         echo $this->generateRegisterFormHTML($message);
     }
-    public function setMessage($message){
-        $this->message =$message;
-    }
+
+    /**
+     * Generate the login page
+     * @param $message the message to show the user
+     * @return string
+     */
     private function generateLoginFormHTML($message) {
+
         $up= new UploadView();
         echo $up->showBackButton();
         echo ' ';
@@ -116,7 +137,11 @@ class LoginView{
 		';
     }
 
-
+    /**
+     * Generate the register page
+     * @param $message to show the information to user
+     * @return string
+     */
     private function generateRegisterFormHTML($message) {
         $up= new UploadView();
         echo $up->showBackButton();
@@ -143,10 +168,13 @@ class LoginView{
 		';
     }
 
-    public function showRegisterButton(){
-        return "<a href='?" . self::$registerURL. "'> Sign up</a>";
-    }
-
+    /**
+     * Check if user is logged in by looking at the session.
+     * Returns integers of the status.
+     * 1 is equal to logged in
+     * -1 is equal to Not logged in
+     * @return int
+     */
     public function loggedIN(){
         if(isset($_SESSION['loggedIn'])) {
             $fd = $_SESSION['loggedIn'];
@@ -159,41 +187,63 @@ class LoginView{
         }
 
     }
-    public function setUsernameFail(){
-        $this->usernameStatus = true;
+
+    /**
+     * Shows the Sign up link
+     * @return string
+     */
+    public function showRegisterButton(){
+        return "<a href='?" . self::$registerURL. "'> Sign up</a>";
     }
 
-    public function getUsernameFail(){
-        return $this->usernameStatus;
-    }
-
-    public function setPasswordFail(){
-        $this->passwordStatus = true;
-    }
-
-    public function getPasswordFail(){
-        return $this->passwordStatus;
-    }
-
+    /**
+     * Returns true if user clicked on register link
+     * @return bool
+     */
     public static function wantToRegisterURL(){
         return isset($_GET[self::$registerURL]);
     }
+
+    /**
+     * Returns if user clicked on register button
+     * @return bool
+     */
     public static function wantToRegister(){
         return isset($_POST[self::$registerButton]);
     }
+
+    /**
+     * Returns true if user clicked on login button
+     * @return bool
+     */
     public static function wantToLogin(){
         return isset($_POST[self::$login]);
     }
+
+    /**
+     * Returns the username if set otherwise true/false
+     * @return mixed
+     */
     public static function getUsername(){
         if(isset($_POST[self::$username]))
             return $_POST[self::$username];
     }
+
+    /**
+     * Returns the password if set
+     * @return string
+     */
     public static function getPassword(){
         if(isset($_POST[self::$password]))
           return $_POST[self::$password];
         else
             return '';
     }
+
+    /**
+     * Returns the password if set
+     * @return string
+     */
     public static function getRePassword(){
         if(isset($_POST[self::$repassword]))
             return $_POST[self::$repassword];
