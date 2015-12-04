@@ -141,6 +141,7 @@ User must be logged in
 1. User is logged in and want to sing out.
 2. User click on "Sign out".
 3. User is redirected to main page.
+
 ###Alternative Scenarios
 None<br>
 
