@@ -100,7 +100,6 @@ class FileDAL
                     $this->fileView->FileUploadEvent("Something went wrong...");
                 }
             } else {
-                $this->fileView->FileUploadEvent("Wrong filetype..");
             }
         } else {
             $this->fileView->FileUploadEvent("File is to large");
