@@ -45,6 +45,9 @@ class MasterController
      */
     public function doControl(){
 
+//        if($this->loginView->checkName() == true){
+//            $this->loginView->register();
+//        }
         //If upload link clicked show public upload page
         if($this->uploadView->uploadLinkClicked()==true){
             //Show public upload page

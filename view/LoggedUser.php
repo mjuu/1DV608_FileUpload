@@ -64,7 +64,7 @@ class LoggedUser{
      * @return string
      */
     public function logoutBTN(){
-        return "<a href='?" . self::$logout. "'> Logout</a>";
+        return "<a href='?" . self::$logout. "'> Sign out</a>";
     }
 
     /**Returns true/false if private upload button clicked

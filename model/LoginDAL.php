@@ -31,7 +31,7 @@ class LoginDAL{
     /**
      * Function for login.
      * Checks username and password.
-     * If user enter correct credentials a session will be set to "Logged in".
+     * If user enter correct credentials a session will be set to "loggedIn".
      * If username or password don't match a error code will be set.
      * @param $username
      * @param $pass
@@ -44,14 +44,6 @@ class LoginDAL{
         $query->execute();
         $result1 = $query->fetchColumn();
 
-        if($result1==false){
-            $this->error =1;
-            $this->username=false;
-
-        }else{
-            $this->username = true;
-        }
-
         $sql = "SELECT password FROM ".DB_LOGIN_TABLE." WHERE password = :passwordInput";
         $query = $this->pdo->prepare($sql);
 
@@ -59,39 +51,38 @@ class LoginDAL{
         $query->execute();
         $result2 = $query->fetchColumn();
 
-        if($result2==false){
-            $this->error=2;
-            $this->password=false;
-
-        }else{
-            $this->password =true;
-        }
-
-        $_SESSION['user']= $username;
-        $_SESSION['pass']= $pass;
-
         if($result1 != false & $result2 !=false){
-            $_SESSION['loggedIn'] =$this->loggedIn;
+            if($username === $result1) {
+                $_SESSION['user'] = $username;
+                $_SESSION['pass'] = $pass;
+                $_SESSION['loggedIn'] = $this->loggedIn;
+            }
         }else{
             $_SESSION['NotLoggedIn'] =$this->notLoggedIn;
         }
     }
 
     /**
-     * !NOT implemented!
      * Check if user exist in the database.
      * @param $username
-     * @return bool
+     * @return mixed
      */
     public function checkUserExist($username){
 
         $sql = "SELECT * FROM ".DB_LOGIN_TABLE." WHERE username = :usernameInput";
         $query = $this->pdo->prepare($sql);
-        $query->bindParam(':usernameInput', $username);
-        $result = $query->fetchAll();
-
+        $query->bindParam(':usernameInput',$username);
+        $query->execute();
+        $result = $query->fetch(\PDO::FETCH_ASSOC);
         return $result;
 
+    }
+    public function usernameAvailable($user){
+        $username1 = $this->checkUserExist($user);
+        if($username1['username'] === $user){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -108,28 +99,5 @@ class LoginDAL{
         $query->bindParam(':password', $password);
         return $query->execute();
 
-    }
-
-    public function getLoginStatus(){
-        return $this->error;
-    }
-    public function getUsernameStatus(){
-        return $this->username;
-    }
-    public function getPasswordStatus(){
-        return $this->password;
-    }
-
-    /**
-     * Returns true if user is logged in
-     * @return bool
-     */
-    public function loggedIn(){
-        if($this->username == true){
-            return true;
-        }else{
-            return false;
-        }
-        return false;
     }
 }

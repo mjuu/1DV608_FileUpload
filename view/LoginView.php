@@ -13,6 +13,7 @@ class LoginView{
 
     private static $login = 'LoginView::Login';
     private static $username = 'LoginView::UserName';
+    private static $usernameReg = 'LoginView::UserName';
     private static $password = 'LoginView::Password';
     private static $repassword = 'LoginView::rePassword';
     private static $messageId = 'LoginView::Message';
@@ -24,6 +25,8 @@ class LoginView{
     public  $loggedin;
     public $loginDAL;
     public $regFail = true;
+    public $message;
+    public $isUsernameAvailable = null;
 
     /**
      * LoginView constructor.
@@ -49,6 +52,17 @@ class LoginView{
         $this->loginDAL->doLogin($this->getUsername(),$this->getPassword());
     }
 
+    public function checkName(){
+        $available = $this->loginDAL->usernameAvailable($this->getUsername());
+        if($available == true){
+            $this->isUsernameAvailable = $available;
+            return true;
+        }
+        $this->isUsernameAvailable = $available;
+        $this->message = 'user exist';
+        //echo 'name is in use';
+        return false;
+    }
     /**
      * Register a new user.
      * Sends the credentials to loginDAL that creates a new user.
@@ -56,7 +70,9 @@ class LoginView{
     public function register(){
 
         if($this->regFail == false) {
-           $this->loginDAL->doRegisterNewUser($this->getUsername(), $this->getPassword());
+                      $this->loginDAL->doRegisterNewUser($this->getUsername(), $this->getPassword());
+          // $this->loginDAL->doRegisterNewUser($this->getUsername(), $this->getPassword());
+           // echo 'username fail';
         }
     }
 
@@ -75,13 +91,11 @@ class LoginView{
             $message="Empty username";
         }elseif($this->wantToLogin()==true &&$this->getUsername()==''){
             $message="Wrong username";
-        }
-        elseif($this->getPassword()==false || $this->getPassword()==''){
+        }elseif($this->getPassword()==false || $this->getPassword()==''){
             $message="Wrong password";
-        } else{
+        }else{
             $message = "Wrong username and pass";
         }
-
         echo $this->generateLoginFormHTML($message);
     }
 
@@ -91,7 +105,7 @@ class LoginView{
      */
     public function doRegister(){
 
-        $message = "Enter Username and password";
+        $message = "Password miss match";
         if(!$this->wantToRegister() == true && $this->regFail==true){
             $message = "Enter Username and password";
         }
@@ -102,12 +116,16 @@ class LoginView{
         }elseif($this->wantToRegister() ==true && $this->getPassword() && $this->getRePassword() == false){
             $message = "Password miss match";
         }elseif($this->wantToRegister() ==true && $this->getPassword() === $this->getRePassword()){
-            $this->regFail =false;
-            $message = "Register completed! Please use the new credentials";
+           if($this->checkName() == true){
+               $this->regFail =false;
+               $message = "Register completed! Please use the new credentials";
+           }else{
+               $message = "Username is taken";
+           }
         }
-
         echo $this->generateRegisterFormHTML($message);
     }
+
 
     /**
      * Generate the login page
@@ -153,8 +171,8 @@ class LoginView{
 					<legend>Register a new account </legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
 
-					<label for="' . self::$username . '">Username :</label>
-					<input type="text" id="' . self::$username . '" name="' . self::$username . '" value="" />
+					<label for="' . self::$usernameReg . '">Username :</label>
+					<input type="text" id="' . self::$usernameReg . '" name="' . self::$usernameReg . '" value="" />
 					<br>
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />

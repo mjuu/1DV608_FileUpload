@@ -50,7 +50,11 @@ class LoginController{
         //User want to register
         if($this->loginView->wantToRegister() == true){
             //do register
-               $this->loginView->register();
+
+               if($this->loginView->checkName() == true){
+                   $this->loginView->register();
+               }else{
+               }
         }
     }
 }
