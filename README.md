@@ -1,7 +1,7 @@
 ### Project in  the course 1DV608 - Web developing with PHP
 # Project FileUpload
-Author: Benjamin Björk
-
+Author: Benjamin Björk (bb222bx@student.lnu.se)
+Website: http://upload.1dv608.mjuu.se
 # Description
 FileUpload is a simple file upload site where you can upload temporary files or upload a file and send the link to your friend.
 You can upload files to the public file list or register a new account and upload to your private file list.
