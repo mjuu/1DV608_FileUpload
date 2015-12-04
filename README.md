@@ -165,12 +165,14 @@ When user want to get back the system will show an error like "Confirm resubmiss
 #1.1 Download a file
 ##Input
 * User click on a link
+
 ##Output
 * The server will show the file if it is a image or mp3.
 
 #1.2 Download a file
 ##Input
 * User click on a broken link
+
 ##Output
 * If the file is missing the server will show a error page.
 
@@ -179,6 +181,7 @@ User want to upload a file to the public file list.
 ##Input
 * User chose a file to upload
 * User click on upload
+
 ##Output
 * System shows a successful message and file information when uploaded.
 
@@ -187,6 +190,7 @@ User want to upload a file to the public file list.
 ##Input
 * User chose a file to upload
 * User click on upload
+
 ##Output
 * If file is to big a error message is shown.
 * If a problem occur while uploading file this error message will be shown "A problem occurred while uploading your file, please try again".
@@ -197,6 +201,7 @@ User want to sign in to the member area.
 ##Input
 * User click on "Sign in"
 * User enter credentials
+
 ##Output
 System authenticate and then redirect user to the member area.
 
@@ -221,6 +226,7 @@ User want to sign up
 ##Input
 * User click on "Sign up"
 * Enter valid credentials
+
 ##Output
 * System responds with "Register completed! Please use the new credentials"
 
@@ -243,6 +249,7 @@ User want to Sign up
 User want to Sign out
 ##Input
 User click on "Sign out"
+
 ##Output
 System redirect user to the main page.
 
@@ -253,6 +260,7 @@ User want to do a private file upload and fail
 * 1. User click on "Private upload"
 * 2. Chose a file
 * 3. Clicks on "Upload"
+
 ##Output
 * 3. System shows a successful message and file information when uploaded. 
 
@@ -263,6 +271,7 @@ User want to do a private file upload
 * 1. User click on "Private upload"
 * 2. Chose a file
 * 3. Clicks on "Upload"
+
 ##Output
 * 3.1. If file is to big a error message is shown.
 * 3.2. If a problem occur while uploading file this error message will be shown "A problem occurred while uploading your file, please try again".
