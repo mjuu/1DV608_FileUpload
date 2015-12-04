@@ -162,107 +162,108 @@ User must be logged in
 When user want to get back the system will show an error like "Confirm resubmission".
 
 #Test-Cases
-##1.1 Download a file
-###Input
+#1.1 Download a file
+##Input
 * User click on a link
-###Output
+##Output
 * The server will show the file if it is a image or mp3.
-##1.2 Download a file
-###Input
+
+#1.2 Download a file
+##Input
 * User click on a broken link
-###Output
+##Output
 * If the file is missing the server will show a error page.
 
-##2.1 Successful upload to the public upload list
+#2.1 Successful upload to the public upload list
 User want to upload a file to the public file list.
-###Input
+##Input
 * User chose a file to upload
 * User click on upload
-###Output
+##Output
 * System shows a successful message and file information when uploaded.
 
-##2.2 Fail to do a public upload
+#2.2 Fail to do a public upload
 User want to upload a file to the public file list.
-###Input
+##Input
 * User chose a file to upload
 * User click on upload
-###Output
+##Output
 * If file is to big a error message is shown.
 * If a problem occur while uploading file this error message will be shown "A problem occurred while uploading your file, please try again".
 * If the system can't detect the specific error it will show this error "Something went wrong...".
 
-##3.1 Successful Sign in
+#3.1 Successful Sign in
 User want to sign in to the member area.
-###Input
+##Input
 * User click on "Sign in"
 * User enter credentials
-###Output
+##Output
 System authenticate and then redirect user to the member area.
 
-##3.2 Failed to Sign in
+#3.2 Failed to Sign in
 User want to sign in to the member area.
-###Input
+##Input
 * 1. User click on "Sign in"
 * 2. User enter empty username and a password.
 * 3. User enter username and empty password. 
 * 4. User enter wrong username but right password. 
 * 5. User enter right username but wrong password. 
 
-###Output
+##Output
 * 2. System respond with "Empty username"
 * 3. System respond with "Wrong password"
 * 4. System respond with "Wrong username and password".
 * 5. System respond with "Wrong username and password".
 
 
-##4.1 Successful "Sign up"
+#4.1 Successful "Sign up"
 User want to sign up
-###Input
+##Input
 * User click on "Sign up"
 * Enter valid credentials
-###Output
+##Output
 * System responds with "Register completed! Please use the new credentials"
 
-##4.2 Failed to "Sign up"
+#4.2 Failed to "Sign up"
 User want to Sign up
-###Input
+##Input
 * 1. User click on "Sign up"
 * 2. User enter empty username and a password.
 * 3. User enter username, empty password and  empty Retype password. 
 * 4. User enter username, password and no "Retype password". 
 * 5. User enter username, password and Retype password. 
 
-###Output
+##Output
 * 2. System respond with "Empty username"
 * 3. System respond with "Wrong password"
 * 4. System respond with "Password miss match".
 * 5. System respond with "Username is taken".
 
-##5.1 Sign out
+#5.1 Sign out
 User want to Sign out
-###Input
+##Input
 User click on "Sign out"
-###Output
+##Output
 System redirect user to the main page.
 
-##6.2 Failed private file upload
+#6.2 Failed private file upload
 User want to do a private file upload and fail
 
-###Input
+##Input
 * 1. User click on "Private upload"
 * 2. Chose a file
 * 3. Clicks on "Upload"
-###Output
+##Output
 * 3. System shows a successful message and file information when uploaded. 
 
-##6.1 Successful private file upload
+#6.1 Successful private file upload
 User want to do a private file upload
 
-###Input
+##Input
 * 1. User click on "Private upload"
 * 2. Chose a file
 * 3. Clicks on "Upload"
-###Output
+##Output
 * 3.1. If file is to big a error message is shown.
 * 3.2. If a problem occur while uploading file this error message will be shown "A problem occurred while uploading your file, please try again".
 * 3.3. If the system can't detect the specific error it will show this error "Something went wrong...".
