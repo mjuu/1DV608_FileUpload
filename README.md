@@ -70,7 +70,7 @@ Requires that files are uploaded on the server
 3. Server shows the file
 
 ###Alternative Scenarios
-2a. File is missing and system shows an error page
+2a. File is missing and system shows an error page <br>
 3. Server gives an option to download the file
 
 ##UC2 - Public upload
@@ -86,10 +86,11 @@ None
 5. System responds with a successful message and show information about the uploaded file, and a URL to the file. 
 6. User want to upload more files and clicks on "Choose file" and upload it.
 7. User want to go back to main page and clicks on "Back to Start".
+
 ###Alternative Scenarios
-4a. System shows error about "A problem occurred while uploading your file, please try again".
-4b. System shows error about "Something went wrong...".
-4c. System shows error about "File is to large".
+4a. System shows error about "A problem occurred while uploading your file, please try again". <br>
+4b. System shows error about "Something went wrong...".<br>
+4c. System shows error about "File is to large".<br>
 
 ##UC3 - Sign in
 ###Actors
@@ -101,13 +102,14 @@ User must be registered
 2. Clicks on sign in
 3. Enter credentials
 4. System authenticate the user and redirect to the member area
+
 ###Alternative Scenarios
-3a. User enter empty username and a password. System respond with "Empty username"
-3b. User enter username and empty password. System respond with "Wrong password"
-3c. User enter wrong username but right password. System respond with "Wrong username and password".
-3d. User enter right username but wrong password. System respond with "Wrong username and password".
-5. User want to go back to main page and clicks on "Back to Start".
-6. User want to create a new account and click on "Sign up".
+3a. User enter empty username and a password. System respond with "Empty username".<br>
+3b. User enter username and empty password. System respond with "Wrong password".<br>
+3c. User enter wrong username but right password. System respond with "Wrong username and password".<br>
+3d. User enter right username but wrong password. System respond with "Wrong username and password".<br>
+5. User want to go back to main page and clicks on "Back to Start".<br>
+6. User want to create a new account and click on "Sign up".<br>
 
 ##UC4 - Sign up
 ###Actors
@@ -125,10 +127,10 @@ None
 8. User click on sign in and enter the member area.
 
 ###Alternative Scenarios
-5a. User enter empty username and a password. System respond with "Empty username"
-5b. User enter username and empty password. System respond with "Empty password"
-5c. User enter username and password but writes wrong password in password retype. System respond with "Password miss match".
-5d. User enter a taken username. System responds with "Username taken".
+5a. User enter empty username and a password. System respond with "Empty username".<br>
+5b. User enter username and empty password. System respond with "Empty password".<br>
+5c. User enter username and password but writes wrong password in password retype. System respond with "Password miss match".<br>
+5d. User enter a taken username. System responds with "Username taken".<br>
 
 ##UC5 - Sign out
 ###Actors
@@ -140,6 +142,7 @@ User must be logged in
 2. User click on "Sign out".
 3. User is redirected to main page.
 ###Alternative Scenarios
+None<br>
 
 ##UC6 - Private upload
 ###Actors
@@ -154,12 +157,13 @@ User must be logged in
 6. User want to upload more files and clicks on "Choose file" and upload it.
 7. User clicks on the new URL and look at/download the file.
 8. User want to go back to member area and clicks on "Back to member area".
+
 ###Alternative Scenarios
-4a. System shows error about "A problem occurred while uploading your file, please try again".
-4b. System shows error about "Something went wrong...".
-4c. System shows error about "File is to large".
-7a. If the uploaded file is a image or a mp3 then the web browser loads it. 
-When user want to get back the system will show an error like "Confirm resubmission".
+4a. System shows error about "A problem occurred while uploading your file, please try again".<br>
+4b. System shows error about "Something went wrong...".<br>
+4c. System shows error about "File is to large".<br>
+7a. If the uploaded file is a image or a mp3 then the web browser loads it. <br>
+When user want to get back the system will show an error like "Confirm resubmission".<br>
 
 #Test-Cases
 #1.1 Download a file
